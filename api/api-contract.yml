@@ -8,3 +8,17 @@ info:
 servers:
   - url: http://localhost:8000
     description: Local development server
+
+paths:
+  /ping:
+    get:
+      summary: Ping the server
+      operationId: ping
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: pong
