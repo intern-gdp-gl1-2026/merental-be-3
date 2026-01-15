@@ -1,7 +1,7 @@
 from src.domain.repositories.user_repository import UserRepository
-from src.domain.entities.user import User
+from src.infrastructure.models.user_model import UserModel
 
 class DjangoUserRepository(UserRepository):
-    def save(self, user: User)->None:
+    def save(self, user: UserModel)->None:
         # implementation
         pass
