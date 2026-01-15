@@ -1,4 +1,4 @@
-from src.application.dtos.user_dto import CreateUserDTO
+from src.application.schemas.user_dto import CreateUserDTO
 
 class RegisterUserUseCase:
     def __init__(self):

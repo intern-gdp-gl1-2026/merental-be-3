@@ -1,4 +1,4 @@
-from src.domain.repositories.user_repository import UserRepository
+from src.infrastructure.repositories.user_repository import UserRepository
 from src.infrastructure.models.user_model import UserModel
 
 class DjangoUserRepository(UserRepository):
