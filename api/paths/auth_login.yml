@@ -17,7 +17,7 @@ post:
               type: string
               example: password123
   responses:
-    '200':
+    "200":
       description: OK
       content:
         application/json:
@@ -27,7 +27,7 @@ post:
               message:
                 type: string
                 example: User logged in successfully
-    '400':
+    "400":
       description: Bad Request
       content:
         application/json:
@@ -37,7 +37,7 @@ post:
               message:
                 type: string
             example: Bad Request
-    '401':
+    "401":
       description: Unauthorized
       content:
         application/json:
