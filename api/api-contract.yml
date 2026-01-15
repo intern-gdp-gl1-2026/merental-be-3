@@ -41,9 +41,11 @@ paths:
                   example: mieintel
                 password:
                   type: string
+                  format: password
                   example: password123
                 confirmPassword:
                   type: string
+                  format: password
                   example: password123
       responses:
         "200":
@@ -94,6 +96,7 @@ paths:
                   example: mieintel
                 password:
                   type: string
+                  format: password
                   example: password123
       responses:
         "200":
