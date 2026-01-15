@@ -21,7 +21,7 @@ post:
               type: string
               example: password123
   responses:
-    '200':
+    "200":
       description: OK
       content:
         application/json:
@@ -31,7 +31,7 @@ post:
               message:
                 type: string
                 example: User registered successfully
-    '400':
+    "400":
       description: Bad Request
       content:
         application/json:
@@ -41,7 +41,7 @@ post:
               message:
                 type: string
                 example: Password and confirmPassword don't match
-    '409':
+    "409":
       description: Conflict
       content:
         application/json:
