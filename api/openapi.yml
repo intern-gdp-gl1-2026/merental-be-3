@@ -13,3 +13,9 @@ paths:
     $ref: paths/auth_register.yml
   /auth/login:
     $ref: paths/auth_login.yml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

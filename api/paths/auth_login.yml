@@ -2,9 +2,6 @@ post:
   summary: Log in
   operationId: loginUser
   requestBody:
-    required:
-      - username
-      - password
     content:
       application/json:
         schema:
@@ -13,9 +10,13 @@ post:
             username:
               type: string
               example: mieintel
+              minLength: 3
+              maxLength: 32
+              pattern: "^[a-zA-Z0-9_]+$"
             password:
-              type: string
+              type: password
               example: password123
+              minLength: 8
   responses:
     "200":
       description: OK

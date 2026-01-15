@@ -2,10 +2,6 @@ post:
   summary: Register a new user
   operationId: registerUser
   requestBody:
-    required:
-      - username
-      - password
-      - confirmPassword
     content:
       application/json:
         schema:
@@ -13,12 +9,19 @@ post:
           properties:
             username:
               type: string
+              minLength: 3
+              maxLength: 32
+              pattern: "^[a-zA-Z0-9_]+$"
               example: mieintel
             password:
               type: string
+              format: password
+              minLength: 8
               example: password123
             confirmPassword:
               type: string
+              format: password
+              minLength: 8
               example: password123
   responses:
     "200":

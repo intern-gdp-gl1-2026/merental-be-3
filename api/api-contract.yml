@@ -27,10 +27,6 @@ paths:
       summary: Register a new user
       operationId: registerUser
       requestBody:
-        required:
-          - username
-          - password
-          - confirmPassword
         content:
           application/json:
             schema:
@@ -38,12 +34,19 @@ paths:
               properties:
                 username:
                   type: string
+                  minLength: 1
+                  maxLength: 32
                   example: mieintel
+                  pattern: "^[a-zA-Z0-9_]+$"
                 password:
                   type: string
+                  format: password
+                  minLength: 8
                   example: password123
                 confirmPassword:
                   type: string
+                  format: password
+                  minLength: 8
                   example: password123
       responses:
         "200":
@@ -81,9 +84,6 @@ paths:
       summary: Log in
       operationId: loginUser
       requestBody:
-        required:
-          - username
-          - password
         content:
           application/json:
             schema:
@@ -92,9 +92,13 @@ paths:
                 username:
                   type: string
                   example: mieintel
+                  minLength: 3
+                  maxLength: 32
+                  pattern: "^[a-zA-Z0-9_]+$"
                 password:
-                  type: string
+                  type: password
                   example: password123
+                  minLength: 8
       responses:
         "200":
           description: OK
@@ -125,4 +129,4 @@ paths:
                 properties:
                   message:
                     type: string
-                example: Bad Request
+                  example: Bad Request
