@@ -1,0 +1,49 @@
+post:
+  summary: Log in
+  operationId: login
+  requestBody:
+    required:
+      - username
+      - password
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+              example: mieintel
+            password:
+              type: string
+              example: password123
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: User logged in successfully
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: Bad Request
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            example: Password and username don't match

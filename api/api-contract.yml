@@ -22,3 +22,107 @@ paths:
               schema:
                 type: string
                 example: pong
+  /auth/register:
+    post:
+      summary: Register a new user
+      operationId: register
+      requestBody:
+        required:
+          - username
+          - password
+          - confirmPassword
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: mieintel
+                password:
+                  type: string
+                  example: password123
+                confirmPassword:
+                  type: string
+                  example: password123
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User registered successfully
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Password and confirmPassword don't match
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Username already exists
+  /auth/login:
+    post:
+      summary: Log in
+      operationId: login
+      requestBody:
+        required:
+          - username
+          - password
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: mieintel
+                password:
+                  type: string
+                  example: password123
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User logged in successfully
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example: Password and username don't match
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example: Bad Request
