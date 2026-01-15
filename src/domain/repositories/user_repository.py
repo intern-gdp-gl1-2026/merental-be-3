@@ -1,0 +1,7 @@
+from uuid import uuid
+from src.domain.entities.user import User
+
+class UserRepository():
+    @abstractmethod
+    def save(self, user: User)->None:
+        pass
