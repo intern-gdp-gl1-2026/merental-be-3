@@ -1,0 +1,11 @@
+get:
+  summary: Ping the server
+  operationId: ping
+  responses:
+    "200":
+      description: OK
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: pong
