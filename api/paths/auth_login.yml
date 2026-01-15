@@ -1,6 +1,6 @@
 post:
   summary: Log in
-  operationId: login
+  operationId: loginUser
   requestBody:
     required:
       - username
