@@ -1,6 +1,6 @@
 post:
   summary: Register a new user
-  operationId: register
+  operationId: registerUser
   requestBody:
     required:
       - username

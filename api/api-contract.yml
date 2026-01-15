@@ -25,7 +25,7 @@ paths:
   /auth/register:
     post:
       summary: Register a new user
-      operationId: register
+      operationId: registerUser
       requestBody:
         required:
           - username
@@ -79,7 +79,7 @@ paths:
   /auth/login:
     post:
       summary: Log in
-      operationId: login
+      operationId: loginUser
       requestBody:
         required:
           - username
