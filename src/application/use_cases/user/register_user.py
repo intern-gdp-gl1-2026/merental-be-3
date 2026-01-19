@@ -48,10 +48,8 @@ class RegisterUserUseCase:
             ``success`` is False, ``message`` describes the validation or
             business rule violation, and ``user`` is None.
         """
-        # Validate input is not None or empty
-        if (not user_dto.username or not isinstance(user_dto.username, str) or
-            not user_dto.password or not isinstance(user_dto.password, str) or
-            not user_dto.confirm_password or not isinstance(user_dto.confirm_password, str)):
+        # Validate input types and non-empty values
+        if not self._validate_input_types(user_dto):
             return RegisterUserResult(
                 success=False,
                 message="Username and password are required",
@@ -123,6 +121,14 @@ class RegisterUserUseCase:
 
         return RegisterUserResult(
             success=True, message="User registered successfully", user=saved_user
+        )
+
+    def _validate_input_types(self, user_dto: CreateUserDTO) -> bool:
+        """Validate that input fields are non-empty strings"""
+        return (
+            isinstance(user_dto.username, str) and user_dto.username and
+            isinstance(user_dto.password, str) and user_dto.password and
+            isinstance(user_dto.confirm_password, str) and user_dto.confirm_password
         )
 
     def _is_valid_username(self, username: str) -> bool:
