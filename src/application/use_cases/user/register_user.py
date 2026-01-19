@@ -49,7 +49,9 @@ class RegisterUserUseCase:
             business rule violation, and ``user`` is None.
         """
         # Validate input is not None or empty
-        if not user_dto.username or not user_dto.password or not user_dto.confirm_password:
+        if (not user_dto.username or not isinstance(user_dto.username, str) or
+            not user_dto.password or not isinstance(user_dto.password, str) or
+            not user_dto.confirm_password or not isinstance(user_dto.confirm_password, str)):
             return RegisterUserResult(
                 success=False,
                 message="Username and password are required",

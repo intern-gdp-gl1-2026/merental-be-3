@@ -25,17 +25,10 @@ class DjangoUserRepository(UserRepository):
             IntegrityError: If username already exists (race condition)
             DatabaseError: For other database errors
         """
-        try:
-            user_model = UserModel(username=user.username, password=user.password)
-            user_model.save()
-            user.id = user_model.id
-            return user
-        except IntegrityError:
-            # Re-raise IntegrityError for duplicate username handling
-            raise
-        except DatabaseError:
-            # Re-raise DatabaseError for connection issues, etc.
-            raise
+        user_model = UserModel(username=user.username, password=user.password)
+        user_model.save()
+        user.id = user_model.id
+        return user
 
     def find_by_username(self, username: str) -> Optional[User]:
         """Find a user by username (case-insensitive)
