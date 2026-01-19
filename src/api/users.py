@@ -46,6 +46,7 @@ def register(request, payload: RegisterRequest):
     """Register a new user
     
     Rate limited to 5 requests per minute per IP address.
+    Note: Ensure X-Forwarded-For headers are properly configured if behind a proxy.
     """
     # Create DTO from request
     user_dto = CreateUserDTO(
@@ -76,6 +77,7 @@ def login(request, payload: LoginRequest):
     """Login a user
     
     Rate limited to 10 requests per minute per IP address to prevent brute-force attacks.
+    Note: Ensure X-Forwarded-For headers are properly configured if behind a proxy.
     """
     # Create DTO from request
     user_dto = LoginUserDTO(

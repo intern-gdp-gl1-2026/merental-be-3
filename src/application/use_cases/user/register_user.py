@@ -125,11 +125,8 @@ class RegisterUserUseCase:
 
     def _validate_input_types(self, user_dto: CreateUserDTO) -> bool:
         """Validate that input fields are non-empty strings"""
-        return (
-            isinstance(user_dto.username, str) and user_dto.username and
-            isinstance(user_dto.password, str) and user_dto.password and
-            isinstance(user_dto.confirm_password, str) and user_dto.confirm_password
-        )
+        fields = [user_dto.username, user_dto.password, user_dto.confirm_password]
+        return all(isinstance(field, str) and field for field in fields)
 
     def _is_valid_username(self, username: str) -> bool:
         """Validate username: 3-32 chars, alphanumeric and underscore only"""
@@ -141,9 +138,9 @@ class RegisterUserUseCase:
         """Validate password: 8-128 chars, must contain uppercase, lowercase, digit, special char"""
         if len(password) < 8 or len(password) > 128:
             return False
-        has_upper = bool(re.search(r"[A-Z]", password))
-        has_lower = bool(re.search(r"[a-z]", password))
-        has_digit = bool(re.search(r"\d", password))
+        has_upper = re.search(r"[A-Z]", password) is not None
+        has_lower = re.search(r"[a-z]", password) is not None
+        has_digit = re.search(r"\d", password) is not None
         # Check for special characters using the defined pattern
-        has_special = bool(re.search(PASSWORD_SPECIAL_CHARS_PATTERN, password))
+        has_special = re.search(PASSWORD_SPECIAL_CHARS_PATTERN, password) is not None
         return has_upper and has_lower and has_digit and has_special
