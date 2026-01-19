@@ -1,5 +1,6 @@
 post:
   summary: Register a new user
+  description: Register a new user account and return a confirmation message upon successful registration.
   operationId: registerUser
   requestBody:
     required: true
@@ -23,12 +24,18 @@ post:
               format: password
               minLength: 8
               maxLength: 128
+              description: >
+                Password must be between 8 and 128 characters long and contain at least one uppercase
+                letter, one lowercase letter, one digit, and one special character.
               example: your_secure_password
             confirmPassword:
               type: string
               format: password
               minLength: 8
               maxLength: 128
+              description: >
+                Must match the password field and follow the same password requirements
+                (at least one uppercase letter, one lowercase letter, one digit, and one special character).
               example: your_secure_password
   responses:
     "201":
