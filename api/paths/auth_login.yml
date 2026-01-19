@@ -2,6 +2,7 @@ post:
   summary: Log in
   operationId: loginUser
   requestBody:
+    required: true
     content:
       application/json:
         schema:
@@ -19,8 +20,9 @@ post:
             password:
               type: string
               format: password
-              example: password123
+              example: your_secure_password
               minLength: 8
+              maxLength: 128
   responses:
     "200":
       description: OK
@@ -28,6 +30,9 @@ post:
         application/json:
           schema:
             type: object
+            required:
+              - message
+              - token
             properties:
               message:
                 type: string
@@ -41,16 +46,20 @@ post:
         application/json:
           schema:
             type: object
+            required:
+              - message
             properties:
               message:
                 type: string
-                example: Bad Request
+                example: Missing required fields or invalid request format
     "401":
       description: Unauthorized
       content:
         application/json:
           schema:
             type: object
+            required:
+              - message
             properties:
               message:
                 type: string
