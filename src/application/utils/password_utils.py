@@ -1,6 +1,5 @@
 """Utility functions for password hashing and verification"""
 import bcrypt
-import secrets
 
 
 def hash_password(password: str) -> str:
