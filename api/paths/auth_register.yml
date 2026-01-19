@@ -6,6 +6,10 @@ post:
       application/json:
         schema:
           type: object
+          required:
+            - username
+            - password
+            - confirmPassword
           properties:
             username:
               type: string
