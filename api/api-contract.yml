@@ -31,10 +31,14 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+                - username
+                - password
+                - confirmPassword
               properties:
                 username:
                   type: string
-                  minLength: 1
+                  minLength: 3
                   maxLength: 32
                   example: mieintel
                   pattern: "^[a-zA-Z0-9_]+$"
@@ -88,6 +92,9 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+                - username
+                - password
               properties:
                 username:
                   type: string
@@ -96,7 +103,8 @@ paths:
                   maxLength: 32
                   pattern: "^[a-zA-Z0-9_]+$"
                 password:
-                  type: password
+                  type: string
+                  format: password
                   example: password123
                   minLength: 8
       responses:
@@ -110,16 +118,9 @@ paths:
                   message:
                     type: string
                     example: User logged in successfully
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
+                  token:
                     type: string
-                example: Password and username don't match
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
         "400":
           description: Bad Request
           content:
@@ -129,4 +130,14 @@ paths:
                 properties:
                   message:
                     type: string
-                  example: Bad Request
+                    example: Bad Request
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Password and username don't match
