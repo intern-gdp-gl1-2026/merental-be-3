@@ -1,0 +1,76 @@
+post:
+  summary: Register a new user
+  description: Register a new user account and return a confirmation message upon successful registration.
+  operationId: registerUser
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - username
+            - password
+            - confirmPassword
+          properties:
+            username:
+              type: string
+              minLength: 3
+              maxLength: 32
+              pattern: "^[a-zA-Z0-9_]+$"
+              example: mieintel
+            password:
+              type: string
+              format: password
+              minLength: 8
+              maxLength: 128
+              description: >
+                Password must be between 8 and 128 characters long and contain at least one uppercase
+                letter, one lowercase letter, one digit, and one special character.
+              example: your_secure_password
+            confirmPassword:
+              type: string
+              format: password
+              minLength: 8
+              maxLength: 128
+              description: >
+                Must match the password field and follow the same password requirements
+                (at least one uppercase letter, one lowercase letter, one digit, and one special character).
+              example: your_secure_password
+  responses:
+    "201":
+      description: Created
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: User registered successfully
+    "400":
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Validation error
+    "409":
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Username already exists

@@ -1,0 +1,53 @@
+openapi: 3.0.3
+info:
+  title: MeRental API
+  description: Base API contract for MeRental backend services.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+paths:
+  /ping:
+    $ref: paths/ping.yml
+  /auth/register:
+    $ref: paths/auth_register.yml
+  /auth/login:
+    $ref: paths/auth_login.yml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+    BadRequestErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          example: Validation error
+    ConflictErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          example: Username already exists
+    UnauthorizedErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          example: Invalid credentials
