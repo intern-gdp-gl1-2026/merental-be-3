@@ -69,7 +69,7 @@ def register(request, payload: RegisterRequest):
 
 @router.post(
     "/login",
-    response={200: LoginResponse, 401: MessageResponse, 429: MessageResponse},
+    response={200: LoginResponse, 401: MessageResponse},
 )
 @ratelimit(key='ip', rate='10/m', method='POST')
 def login(request, payload: LoginRequest):

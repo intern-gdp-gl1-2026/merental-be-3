@@ -53,5 +53,5 @@ class DjangoUserRepository(UserRepository):
         except UserModel.DoesNotExist:
             return None
         except DatabaseError:
-            # Log error and return None to avoid exposing database issues
+            # Return None to avoid exposing database issues to the caller
             return None
