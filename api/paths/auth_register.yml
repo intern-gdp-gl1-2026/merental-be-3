@@ -54,7 +54,7 @@ post:
             properties:
               message:
                 type: string
-                example: Password and confirmPassword don't match
+                example: Validation error
     "409":
       description: Conflict
       content:

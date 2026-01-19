@@ -1,5 +1,6 @@
 post:
-  summary: Log in
+  summary: Authenticate user and generate access token
+  description: Authenticates a user with a username and password and returns an access token on successful login.
   operationId: loginUser
   requestBody:
     required: true
@@ -13,16 +14,16 @@ post:
           properties:
             username:
               type: string
-              example: mieintel
               minLength: 3
               maxLength: 32
               pattern: "^[a-zA-Z0-9_]+$"
+              example: mieintel
             password:
               type: string
               format: password
-              example: your_secure_password
               minLength: 8
               maxLength: 128
+              example: your_secure_password
   responses:
     "200":
       description: OK
@@ -63,4 +64,4 @@ post:
             properties:
               message:
                 type: string
-                example: Password and username don't match
+                example: Invalid credentials
