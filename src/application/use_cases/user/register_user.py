@@ -2,13 +2,17 @@ import re
 from dataclasses import dataclass
 from typing import Optional
 
-from django.db import transaction
+from django.db import DatabaseError, IntegrityError, transaction
 
 from src.application.schemas.result_enums import RegisterErrorCode
 from src.application.schemas.user_dto import CreateUserDTO
 from src.application.utils.password_utils import hash_password
 from src.domain.entities.user import User
 from src.domain.repositories.user_repository import UserRepository
+
+
+# Password validation pattern - special characters for password strength
+PASSWORD_SPECIAL_CHARS_PATTERN = r'[!@#$%^&*(),.?":{}|<>_=+/\\;:\[\]~`-]'
 
 
 @dataclass
@@ -100,9 +104,15 @@ class RegisterUserUseCase:
         try:
             with transaction.atomic():
                 saved_user = self.user_repository.save(user)
-        except Exception:
-            # If saving the user fails (e.g., due to a database constraint violation),
-            # ensure we do not report success and allow the caller to handle the failure.
+        except IntegrityError:
+            # Handle race condition where username was created between check and save
+            return RegisterUserResult(
+                success=False,
+                message="Username already exists",
+                error_code=RegisterErrorCode.USERNAME_EXISTS,
+            )
+        except DatabaseError:
+            # Handle database connection or constraint errors
             return RegisterUserResult(
                 success=False,
                 message="Failed to register user",
@@ -126,6 +136,6 @@ class RegisterUserUseCase:
         has_upper = bool(re.search(r"[A-Z]", password))
         has_lower = bool(re.search(r"[a-z]", password))
         has_digit = bool(re.search(r"\d", password))
-        # More comprehensive special character pattern
-        has_special = bool(re.search(r'[!@#$%^&*(),.?":{}|<>_=+/\\;:\[\]~`-]', password))
+        # Check for special characters using the defined pattern
+        has_special = bool(re.search(PASSWORD_SPECIAL_CHARS_PATTERN, password))
         return has_upper and has_lower and has_digit and has_special
