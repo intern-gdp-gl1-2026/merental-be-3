@@ -1,10 +1,14 @@
 from typing import Optional
+import logging
 
 from django.db import DatabaseError, IntegrityError
 
 from src.domain.entities.user import User
 from src.domain.repositories.user_repository import UserRepository
 from src.infrastructure.models.user_model import UserModel
+
+
+logger = logging.getLogger(__name__)
 
 
 class DjangoUserRepository(UserRepository):
@@ -52,6 +56,7 @@ class DjangoUserRepository(UserRepository):
             )
         except UserModel.DoesNotExist:
             return None
-        except DatabaseError:
-            # Return None to avoid exposing database issues to the caller
+        except DatabaseError as e:
+            # Log database errors for debugging while returning None to prevent exposure
+            logger.error(f"Database error in find_by_username: {e}")
             return None

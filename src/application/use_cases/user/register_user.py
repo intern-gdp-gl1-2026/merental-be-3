@@ -127,5 +127,5 @@ class RegisterUserUseCase:
         has_lower = bool(re.search(r"[a-z]", password))
         has_digit = bool(re.search(r"\d", password))
         # More comprehensive special character pattern
-        has_special = bool(re.search(r'[!@#$%^&*(),.?":{}|<>_\-=+/\\;:\[\]~`]', password))
+        has_special = bool(re.search(r'[!@#$%^&*(),.?":{}|<>_=+/\\;:\[\]~`-]', password))
         return has_upper and has_lower and has_digit and has_special
