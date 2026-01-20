@@ -4,7 +4,6 @@ from pydantic import model_validator
 
 from src.api.dependencies import get_login_use_case, get_register_use_case
 from src.application.schemas.result_enums import RegisterErrorCode
-from src.application.schemas.user_dto import CreateUserDTO, LoginUserDTO
 
 
 router = Router(tags=["auth"])
@@ -56,15 +55,9 @@ def register(request, payload: RegisterRequest):
     Rate limited to 5 requests per minute per IP address.
     Note: Ensure X-Forwarded-For headers are properly configured if behind a proxy.
     """
-    # Create DTO from request (confirm_password already validated in Schema)
-    user_dto = CreateUserDTO(
-        username=payload.username,
-        password=payload.password,
-    )
-
-    # Execute use case with injected dependencies
+    # Execute use case directly with the schema
     use_case = get_register_use_case()
-    result = use_case.execute(user_dto)
+    result = use_case.execute(payload.username, payload.password)
 
     # Return response based on error code
     if result.success:
@@ -86,15 +79,9 @@ def login(request, payload: LoginRequest):
     Rate limited to 10 requests per minute per IP address to prevent brute-force attacks.
     Note: Ensure X-Forwarded-For headers are properly configured if behind a proxy.
     """
-    # Create DTO from request
-    user_dto = LoginUserDTO(
-        username=payload.username,
-        password=payload.password,
-    )
-
-    # Execute use case with injected dependencies
+    # Execute use case directly with the schema
     use_case = get_login_use_case()
-    result = use_case.execute(user_dto)
+    result = use_case.execute(payload.username, payload.password)
 
     # Return response based on result
     if result.success:

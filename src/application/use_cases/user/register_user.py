@@ -4,7 +4,6 @@ from typing import Optional
 from django.db import DatabaseError, IntegrityError, transaction
 
 from src.application.schemas.result_enums import RegisterErrorCode
-from src.application.schemas.user_dto import CreateUserDTO
 from src.application.utils.password_utils import hash_password
 from src.domain.entities.user import User
 from src.domain.exceptions import InvalidPasswordError, InvalidUsernameError
@@ -25,19 +24,19 @@ class RegisterUserUseCase:
     def __init__(self, users: UserRepository):
         self.users = users
 
-    def execute(self, user_dto: CreateUserDTO) -> RegisterUserResult:
+    def execute(self, username: str, password: str) -> RegisterUserResult:
         """Register a new user based on the provided data.
 
         This method validates the input data through the User entity,
         checks for existing users with the same username, hashes the password,
         and persists the new user using the configured user repository.
 
-        Note: Password confirmation (confirm_password) should be validated at the
-        API layer before calling this use case.
+        Note: Password confirmation should be validated at the API layer
+        before calling this use case.
 
         Args:
-            user_dto: Data transfer object containing the username and password
-                for the user to register.
+            username: The username for the new user
+            password: The password for the new user (will be hashed before saving)
 
         Returns:
             RegisterUserResult: The result of the registration attempt. On
@@ -47,7 +46,7 @@ class RegisterUserUseCase:
             business rule violation, and ``user`` is None.
         """
         # Validate input types and non-empty values
-        if not self._validate_input_types(user_dto):
+        if not username or not password:
             return RegisterUserResult(
                 success=False,
                 message="Username and password are required",
@@ -56,7 +55,7 @@ class RegisterUserUseCase:
 
         # Try to create User entity - validation happens automatically
         try:
-            user = User(username=user_dto.username, password=user_dto.password)
+            user = User(username=username, password=password)
         except InvalidUsernameError as e:
             return RegisterUserResult(
                 success=False,
@@ -107,8 +106,3 @@ class RegisterUserUseCase:
         return RegisterUserResult(
             success=True, message="User registered successfully", user=saved_user
         )
-
-    def _validate_input_types(self, user_dto: CreateUserDTO) -> bool:
-        """Validate that input fields are non-empty strings"""
-        fields = [user_dto.username, user_dto.password]
-        return all(isinstance(field, str) and field for field in fields)

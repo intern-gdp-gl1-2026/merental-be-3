@@ -6,7 +6,6 @@ from typing import Optional
 from django.conf import settings
 
 from src.application.schemas.result_enums import LoginErrorCode
-from src.application.schemas.user_dto import LoginUserDTO
 from src.application.utils.password_utils import verify_password
 from src.domain.entities.user import User
 from src.domain.repositories.user_repository import UserRepository
@@ -26,19 +25,20 @@ class LoginUserUseCase:
     def __init__(self, users: UserRepository):
         self.users = users
 
-    def execute(self, user_dto: LoginUserDTO) -> LoginUserResult:
+    def execute(self, username: str, password: str) -> LoginUserResult:
         """
-        Authenticate a user using the provided login data.
+        Authenticate a user using the provided credentials.
 
         Args:
-            user_dto: Data transfer object containing the username and password.
+            username: The username to authenticate
+            password: The password to verify
 
         Returns:
             LoginUserResult: Result indicating whether authentication succeeded,
             including an optional JWT token when successful.
         """
         # Validate input is not None or empty
-        if not user_dto.username or not user_dto.password:
+        if not username or not password:
             return LoginUserResult(
                 success=False,
                 message="Invalid credentials",
@@ -46,7 +46,7 @@ class LoginUserUseCase:
             )
 
         # Normalize username to lowercase for case-insensitive login
-        normalized_username = user_dto.username.strip().lower()
+        normalized_username = username.strip().lower()
 
         # Check if username exists
         existing_user = self.users.find_by_username(normalized_username)
@@ -58,7 +58,7 @@ class LoginUserUseCase:
             )
 
         # Check if password is correct using constant-time comparison
-        if not verify_password(user_dto.password, existing_user.password):
+        if not verify_password(password, existing_user.password):
             return LoginUserResult(
                 success=False,
                 message="Invalid credentials",
