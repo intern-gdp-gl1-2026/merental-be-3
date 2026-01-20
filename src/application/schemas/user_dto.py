@@ -3,11 +3,15 @@ from dataclasses import dataclass
 
 @dataclass
 class CreateUserDTO:
-    """Data Transfer Object for creating a user"""
+    """
+    Data Transfer Object for creating a user.
+
+    Note: confirm_password is validated at the API layer before this DTO is created.
+    The use case only needs username and password.
+    """
 
     username: str
     password: str
-    confirm_password: str
 
 
 @dataclass

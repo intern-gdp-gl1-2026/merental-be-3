@@ -14,13 +14,13 @@ logger = logging.getLogger(__name__)
 class DjangoUserRepository(UserRepository):
     def save(self, user: User) -> User:
         """Save a user entity to the database
-        
+
         Args:
             user: User entity to save
-            
+
         Returns:
             User: Saved user entity with ID
-            
+
         Raises:
             IntegrityError: If username already exists (race condition)
             DatabaseError: For other database errors
@@ -32,10 +32,10 @@ class DjangoUserRepository(UserRepository):
 
     def find_by_username(self, username: str) -> Optional[User]:
         """Find a user by username (case-insensitive)
-        
+
         Args:
             username: Username to search for
-            
+
         Returns:
             User entity if found, None otherwise
         """
@@ -46,6 +46,7 @@ class DjangoUserRepository(UserRepository):
                 id=user_model.id,
                 username=user_model.username,
                 password=user_model.password,
+                is_hashed=True,  # Skip password validation for DB-loaded users
             )
         except UserModel.DoesNotExist:
             return None

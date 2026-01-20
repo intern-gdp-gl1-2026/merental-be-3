@@ -23,8 +23,8 @@ class LoginUserResult:
 
 
 class LoginUserUseCase:
-    def __init__(self, user_repository: UserRepository):
-        self.user_repository = user_repository
+    def __init__(self, users: UserRepository):
+        self.users = users
 
     def execute(self, user_dto: LoginUserDTO) -> LoginUserResult:
         """
@@ -49,7 +49,7 @@ class LoginUserUseCase:
         normalized_username = user_dto.username.strip().lower()
 
         # Check if username exists
-        existing_user = self.user_repository.find_by_username(normalized_username)
+        existing_user = self.users.find_by_username(normalized_username)
         if existing_user is None:
             return LoginUserResult(
                 success=False,
