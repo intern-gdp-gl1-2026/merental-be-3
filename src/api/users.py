@@ -1,47 +1,17 @@
 from django_ratelimit.decorators import ratelimit
-from ninja import Router, Schema
-from pydantic import model_validator
+from ninja import Router
 
 from src.api.dependencies import get_login_use_case, get_register_use_case
 from src.application.schemas.result_enums import RegisterErrorCode
+from src.application.schemas.user_dto import (
+    LoginRequest,
+    LoginResponse,
+    MessageResponse,
+    RegisterRequest,
+)
 
 
 router = Router(tags=["auth"])
-
-
-class RegisterRequest(Schema):
-    """Request schema for user registration with password confirmation validation"""
-
-    username: str
-    password: str
-    confirmPassword: str
-
-    @model_validator(mode="after")
-    def validate_passwords_match(self) -> "RegisterRequest":
-        """Validate that password and confirmPassword match"""
-        if self.password != self.confirmPassword:
-            raise ValueError("Passwords do not match")
-        return self
-
-
-class LoginRequest(Schema):
-    """Request schema for user login"""
-
-    username: str
-    password: str
-
-
-class MessageResponse(Schema):
-    """Response schema with message"""
-
-    message: str
-
-
-class LoginResponse(Schema):
-    """Response schema for user login"""
-
-    message: str
-    token: str
 
 
 @router.post(
