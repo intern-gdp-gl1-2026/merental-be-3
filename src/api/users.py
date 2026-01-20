@@ -3,7 +3,7 @@ from ninja import Router
 
 from src.api.dependencies import get_login_use_case, get_register_use_case
 from src.application.schemas.result_enums import RegisterErrorCode
-from src.application.schemas.user_dto import (
+from src.api.schemas.user_dto import (
     LoginRequest,
     LoginResponse,
     MessageResponse,
