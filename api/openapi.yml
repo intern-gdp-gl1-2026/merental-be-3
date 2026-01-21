@@ -24,6 +24,37 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
+    Car:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Toyota Camry 2023"
+        brand:
+          type: string
+          example: "Toyota"
+        model:
+          type: string
+          example: "Camry"
+        year:
+          type: integer
+          example: 2023
+        plate_number:
+          type: string
+          example: "B 1234 XYZ"
+        color:
+          type: string
+          example: "White"
+        price_per_day:
+          type: number
+          format: float
+          example: 500000.00
+        location:
+          type: string
+          example: "Jakarta"
     ErrorResponse:
       type: object
       required:
