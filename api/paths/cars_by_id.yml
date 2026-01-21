@@ -27,7 +27,16 @@ get:
 
 put:
   summary: Update a car
-  description: Updates an existing car's information
+  description: |
+    Updates an existing car's information. Supports partial updates - only include the fields you want to change.
+    Unchanged fields will retain their current values.
+    
+    **Example partial update:**
+    ```json
+    {
+      "color": "Black"
+    }
+    ```
   operationId: updateCar
   tags:
     - Cars
@@ -44,15 +53,6 @@ put:
       application/json:
         schema:
           type: object
-          required:
-            - name
-            - brand
-            - model
-            - year
-            - plate_number
-            - color
-            - price_per_day
-            - location
           properties:
             name:
               type: string
@@ -83,7 +83,7 @@ put:
               type: string
               minLength: 2
               maxLength: 30
-              example: "White"
+              example: "Black"
             price_per_day:
               type: number
               format: float
