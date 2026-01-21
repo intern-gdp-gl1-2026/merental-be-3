@@ -1,0 +1,54 @@
+get:
+  summary: Get car by ID
+  description: Returns a single car by its ID
+  tags:
+    - Cars
+  parameters:
+    - name: id
+      in: path
+      description: Car ID
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: Car details
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: "Toyota Camry 2023"
+              brand:
+                type: string
+                example: "Toyota"
+              model:
+                type: string
+                example: "Camry"
+              year:
+                type: integer
+                example: 2023
+              plate_number:
+                type: string
+                example: "B 1234 XYZ"
+              color:
+                type: string
+                example: "White"
+              price_per_day:
+                type: number
+                format: float
+                example: 50.00
+              location:
+                type: string
+                example: "Jakarta"
+    '404':
+      description: Car not found
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/ErrorResponse'
