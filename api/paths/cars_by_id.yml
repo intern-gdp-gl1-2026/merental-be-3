@@ -127,13 +127,7 @@ put:
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - message
-            properties:
-              message:
-                type: string
-                example: Car with this plate number already exists
+            $ref: '../openapi.yml#/components/schemas/ConflictErrorResponse'
 
 delete:
   summary: Delete a car
