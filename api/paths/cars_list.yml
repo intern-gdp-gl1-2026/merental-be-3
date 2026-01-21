@@ -1,30 +1,44 @@
 get:
   summary: Get all cars
-  description: Returns a list of all cars. Optionally filter by location and date range (all three parameters must be provided together).
+  description: |
+    Returns a list of all cars. Optionally filter by location and date range.
+    
+    **Parameter Constraint (enforced at application level):**
+    If any filter parameter is provided, all three parameters (location, start_date, end_date) must be provided together.
+    Providing only some parameters will result in a 400 Bad Request error.
+    
+    **Examples:**
+    - Valid: No parameters (returns all cars)
+    - Valid: `?location=Jakarta&start_date=2026-01-25&end_date=2026-01-30`
+    - Invalid: `?location=Jakarta` (missing start_date and end_date)
+    - Invalid: `?location=Jakarta&start_date=2026-01-25` (missing end_date)
   operationId: getCars
   tags:
     - Cars
   parameters:
     - name: location
       in: query
-      description: Location to filter cars by
+      description: Location to filter cars by. Must be provided together with start_date and end_date.
       required: false
       schema:
         type: string
+      example: "Jakarta"
     - name: start_date
       in: query
-      description: Start date for availability (ISO 8601 format)
+      description: Start date for availability (ISO 8601 format). Must be provided together with location and end_date.
       required: false
       schema:
         type: string
         format: date
+      example: "2026-01-25"
     - name: end_date
       in: query
-      description: End date for availability (ISO 8601 format)
+      description: End date for availability (ISO 8601 format). Must be provided together with location and start_date.
       required: false
       schema:
         type: string
         format: date
+      example: "2026-01-30"
   responses:
     '200':
       description: List of cars
