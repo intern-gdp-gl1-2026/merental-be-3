@@ -1,6 +1,7 @@
 get:
   summary: Get all cars
   description: Returns a list of all cars. Optionally filter by location and date range (all three parameters must be provided together).
+  operationId: getCars
   tags:
     - Cars
   parameters:

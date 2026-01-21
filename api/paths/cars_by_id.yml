@@ -1,6 +1,7 @@
 get:
   summary: Get car by ID
   description: Returns a single car by its ID
+  operationId: getCarsById
   tags:
     - Cars
   parameters:
