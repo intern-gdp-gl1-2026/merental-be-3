@@ -26,6 +26,16 @@ components:
   schemas:
     Car:
       type: object
+      required:
+        - id
+        - name
+        - brand
+        - model
+        - year
+        - plate_number
+        - color
+        - price_per_day
+        - location
       properties:
         id:
           type: integer
