@@ -13,6 +13,10 @@ paths:
     $ref: paths/auth_register.yml
   /auth/login:
     $ref: paths/auth_login.yml
+  /cars:
+    $ref: paths/cars_list.yml
+  /cars/{id}:
+    $ref: paths/cars_by_id.yml
 components:
   securitySchemes:
     bearerAuth:
