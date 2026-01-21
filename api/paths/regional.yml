@@ -65,9 +65,3 @@ get:
                 type: array
                 items:
                   $ref: "../openapi.yml#/components/schemas/Regional"
-    "404":
-      description: Not Found
-      content:
-        application/json:
-          schema:
-            $ref: "../openapi.yml#/components/schemas/ErrorResponse"
