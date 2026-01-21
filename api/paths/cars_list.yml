@@ -94,9 +94,11 @@ get:
   description: |
     Returns a list of all cars. Optionally filter by region and date range.
     
-    **Parameter Constraint (enforced at application level):**
-    If any filter parameter is provided, all three parameters (r, s, e) must be provided together.
-    Providing only some parameters will result in a 400 Bad Request error.
+    **Parameter Constraints (enforced at application level):**
+    1. If any filter parameter is provided, all three parameters (r, s, e) must be provided together.
+       Providing only some parameters will result in a 400 Bad Request error.
+    2. The end date (e) must be greater than or equal to the start date (s).
+       Invalid date ranges will result in a 400 Bad Request error.
     
     **Region IDs:**
     - 1 = Jakarta
@@ -108,6 +110,7 @@ get:
     - Valid: `?r=1&s=1737792000&e=1738224000` (Jakarta, Jan 25-30, 2026)
     - Invalid: `?r=1` (missing s and e)
     - Invalid: `?r=1&s=1737792000` (missing e)
+    - Invalid: `?r=1&s=1738224000&e=1737792000` (end date before start date)
   operationId: getCars
   tags:
     - Cars
@@ -121,7 +124,7 @@ get:
       example: 1
     - name: s
       in: query
-      description: Start date as Unix epoch timestamp (seconds). Must be provided together with r and e.
+      description: Start date as Unix epoch timestamp (seconds). Must be provided together with r and e. Must be less than or equal to e.
       required: false
       schema:
         type: integer
@@ -129,7 +132,7 @@ get:
       example: 1737792000
     - name: e
       in: query
-      description: End date as Unix epoch timestamp (seconds). Must be provided together with r and s.
+      description: End date as Unix epoch timestamp (seconds). Must be provided together with r and s. Must be greater than or equal to s.
       required: false
       schema:
         type: integer
