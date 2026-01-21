@@ -30,3 +30,164 @@ get:
               message:
                 type: string
                 example: Car not found
+
+put:
+  summary: Update a car
+  description: Updates an existing car's information
+  operationId: updateCar
+  tags:
+    - Cars
+  parameters:
+    - name: id
+      in: path
+      description: Car ID
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - name
+            - brand
+            - model
+            - year
+            - plate_number
+            - color
+            - price_per_day
+            - location
+          properties:
+            name:
+              type: string
+              minLength: 3
+              maxLength: 100
+              example: "Toyota Camry 2023"
+            brand:
+              type: string
+              minLength: 2
+              maxLength: 50
+              example: "Toyota"
+            model:
+              type: string
+              minLength: 1
+              maxLength: 50
+              example: "Camry"
+            year:
+              type: integer
+              minimum: 1900
+              maximum: 2100
+              example: 2023
+            plate_number:
+              type: string
+              minLength: 3
+              maxLength: 20
+              example: "B 1234 XYZ"
+            color:
+              type: string
+              minLength: 2
+              maxLength: 30
+              example: "White"
+            price_per_day:
+              type: number
+              format: float
+              minimum: 0
+              example: 500000.00
+            location:
+              type: string
+              minLength: 2
+              maxLength: 100
+              example: "Jakarta"
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+              - car
+            properties:
+              message:
+                type: string
+                example: Car updated successfully
+              car:
+                $ref: '../openapi.yml#/components/schemas/Car'
+    "400":
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Validation error
+    "404":
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Car not found
+    "409":
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Car with this plate number already exists
+
+delete:
+  summary: Delete a car
+  description: Deletes a car from the system
+  operationId: deleteCar
+  tags:
+    - Cars
+  parameters:
+    - name: id
+      in: path
+      description: Car ID
+      required: true
+      schema:
+        type: integer
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Car deleted successfully
+    "404":
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Car not found
