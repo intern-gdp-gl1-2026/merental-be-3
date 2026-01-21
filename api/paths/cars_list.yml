@@ -92,44 +92,49 @@ post:
 get:
   summary: Get all cars
   description: |
-    Returns a list of all cars. Optionally filter by location and date range.
+    Returns a list of all cars. Optionally filter by region and date range.
     
     **Parameter Constraint (enforced at application level):**
-    If any filter parameter is provided, all three parameters (location, start_date, end_date) must be provided together.
+    If any filter parameter is provided, all three parameters (r, s, e) must be provided together.
     Providing only some parameters will result in a 400 Bad Request error.
+    
+    **Region IDs:**
+    - 1 = Jakarta
+    - 2 = Surabaya
+    - (Add more as needed)
     
     **Examples:**
     - Valid: No parameters (returns all cars)
-    - Valid: `?location=Jakarta&start_date=2026-01-25&end_date=2026-01-30`
-    - Invalid: `?location=Jakarta` (missing start_date and end_date)
-    - Invalid: `?location=Jakarta&start_date=2026-01-25` (missing end_date)
+    - Valid: `?r=1&s=1737792000&e=1738224000` (Jakarta, Jan 25-30, 2026)
+    - Invalid: `?r=1` (missing s and e)
+    - Invalid: `?r=1&s=1737792000` (missing e)
   operationId: getCars
   tags:
     - Cars
   parameters:
-    - name: location
+    - name: r
       in: query
-      description: Location to filter cars by. Must be provided together with start_date and end_date.
+      description: Region/Location UUID. Must be provided together with s and e. (e.g., 1=Jakarta, 2=Surabaya)
       required: false
       schema:
-        type: string
-      example: "Jakarta"
-    - name: start_date
+        type: integer
+      example: 1
+    - name: s
       in: query
-      description: Start date for availability (ISO 8601 format). Must be provided together with location and end_date.
+      description: Start date as Unix epoch timestamp (seconds). Must be provided together with r and e.
       required: false
       schema:
-        type: string
-        format: date
-      example: "2026-01-25"
-    - name: end_date
+        type: integer
+        format: int64
+      example: 1737792000
+    - name: e
       in: query
-      description: End date for availability (ISO 8601 format). Must be provided together with location and start_date.
+      description: End date as Unix epoch timestamp (seconds). Must be provided together with r and s.
       required: false
       schema:
-        type: string
-        format: date
-      example: "2026-01-30"
+        type: integer
+        format: int64
+      example: 1738224000
   responses:
     '200':
       description: List of cars
