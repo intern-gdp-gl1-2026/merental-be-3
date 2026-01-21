@@ -51,6 +51,7 @@ get:
   summary: Get all regionals
   description: Returns a list of all regionals
   operationId: getRegionals
+  required: false
   tags:
     - Regional
   responses:

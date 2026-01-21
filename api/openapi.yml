@@ -26,6 +26,9 @@ components:
   schemas:
     Regional:
       type: object
+      required:
+        - id
+        - name
       properties:
         id:
           type: integer
