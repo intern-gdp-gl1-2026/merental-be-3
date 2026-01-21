@@ -121,13 +121,7 @@ put:
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - message
-            properties:
-              message:
-                type: string
-                example: Validation error
+            $ref: '../openapi.yml#/components/schemas/BadRequestErrorResponse'
     "404":
       description: Not Found
       content:
