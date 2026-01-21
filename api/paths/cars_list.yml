@@ -1,0 +1,73 @@
+get:
+  summary: Get all cars
+  description: Returns a list of all cars. Optionally filter by location and date range (all three parameters must be provided together).
+  tags:
+    - Cars
+  parameters:
+    - name: location
+      in: query
+      description: Location to filter cars by
+      required: false
+      schema:
+        type: string
+    - name: start_date
+      in: query
+      description: Start date for availability (ISO 8601 format)
+      required: false
+      schema:
+        type: string
+        format: date
+    - name: end_date
+      in: query
+      description: End date for availability (ISO 8601 format)
+      required: false
+      schema:
+        type: string
+        format: date
+  responses:
+    '200':
+      description: List of cars
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              cars:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Toyota Camry 2023"
+                    brand:
+                      type: string
+                      example: "Toyota"
+                    model:
+                      type: string
+                      example: "Camry"
+                    year:
+                      type: integer
+                      example: 2023
+                    plate_number:
+                      type: string
+                      example: "B 1234 XYZ"
+                    color:
+                      type: string
+                      example: "White"
+                    price_per_day:
+                      type: number
+                      format: float
+                      example: 500000.00
+                    location:
+                      type: string
+                      example: "Jakarta"
+    '400':
+      description: Bad request - parameters must be used together
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/BadRequestErrorResponse'
