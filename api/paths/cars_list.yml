@@ -38,7 +38,7 @@ post:
             year:
               type: integer
               minimum: 1900
-              maximum: 2100
+              maximum: 2027
               example: 2023
             plate_number:
               type: string
