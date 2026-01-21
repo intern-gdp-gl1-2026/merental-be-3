@@ -77,7 +77,7 @@ components:
       properties:
         message:
           type: string
-          example: Username already exists
+          example: Resource already exists
     NotFoundErrorResponse:
       type: object
       required:
