@@ -23,13 +23,7 @@ get:
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - message
-            properties:
-              message:
-                type: string
-                example: Car not found
+            $ref: '../openapi.yml#/components/schemas/NotFoundErrorResponse'
 
 put:
   summary: Update a car
@@ -127,13 +121,7 @@ put:
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - message
-            properties:
-              message:
-                type: string
-                example: Car not found
+            $ref: '../openapi.yml#/components/schemas/NotFoundErrorResponse'
     "409":
       description: Conflict
       content:
@@ -178,10 +166,4 @@ delete:
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - message
-            properties:
-              message:
-                type: string
-                example: Car not found
+            $ref: '../openapi.yml#/components/schemas/NotFoundErrorResponse'
