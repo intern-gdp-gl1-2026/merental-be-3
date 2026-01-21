@@ -17,6 +17,10 @@ paths:
     $ref: paths/cars_list.yml
   /cars/{id}:
     $ref: paths/cars_by_id.yml
+  /regional:
+    $ref: paths/regional.yml
+  /regional/{id}:
+    $ref: paths/regional_by_id.yml
 components:
   securitySchemes:
     bearerAuth:
@@ -24,6 +28,15 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
+    Regional:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Jakarta"
     Car:
       type: object
       properties:
