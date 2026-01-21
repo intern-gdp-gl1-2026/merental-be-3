@@ -52,8 +52,14 @@ get:
                 items:
                   $ref: '../openapi.yml#/components/schemas/Car'
     '400':
-      description: Bad request - parameters must be used together
+      description: Bad Request
       content:
         application/json:
           schema:
-            $ref: '../openapi.yml#/components/schemas/BadRequestErrorResponse'
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: If using filters, location, start_date, and end_date must all be provided

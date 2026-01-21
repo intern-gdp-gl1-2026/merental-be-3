@@ -19,8 +19,14 @@ get:
           schema:
             $ref: '../openapi.yml#/components/schemas/Car'
     '404':
-      description: Car not found
+      description: Not Found
       content:
         application/json:
           schema:
-            $ref: '../openapi.yml#/components/schemas/ErrorResponse'
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Car not found
