@@ -1,7 +1,18 @@
+"""Car domain entity with built-in validation."""
+
 from dataclasses import dataclass
 from typing import Optional
 
 from src.domain.exceptions import DomainValidationError
+
+
+# Validation constants
+CAR_NAME_MIN, CAR_NAME_MAX = 3, 100
+BRAND_MIN, BRAND_MAX = 2, 50
+MODEL_MIN, MODEL_MAX = 1, 50
+YEAR_MIN, YEAR_MAX = 1900, 2027
+PLATE_NUMBER_MIN, PLATE_NUMBER_MAX = 3, 20
+COLOR_MIN, COLOR_MAX = 2, 30
 
 
 @dataclass
@@ -55,9 +66,14 @@ class Car:
         Raises:
             DomainValidationError: If name is invalid
         """
-        if not self.name or len(self.name) < 3 or len(self.name) > 100:
+        if (
+            not self.name
+            or len(self.name) < CAR_NAME_MIN
+            or len(self.name) > CAR_NAME_MAX
+        ):
             raise DomainValidationError(
-                "Car name must be between 3 and 100 characters", "INVALID_CAR_NAME"
+                f"Name must be between {CAR_NAME_MIN} and {CAR_NAME_MAX} characters",
+                "INVALID_CAR_NAME",
             )
 
     def _validate_brand(self) -> None:
@@ -66,9 +82,10 @@ class Car:
         Raises:
             DomainValidationError: If brand is invalid
         """
-        if not self.brand or len(self.brand) < 2 or len(self.brand) > 50:
+        if not self.brand or len(self.brand) < BRAND_MIN or len(self.brand) > BRAND_MAX:
             raise DomainValidationError(
-                "Brand must be between 2 and 50 characters", "INVALID_BRAND"
+                f"Brand must be between {BRAND_MIN} and {BRAND_MAX} characters",
+                "INVALID_BRAND",
             )
 
     def _validate_model(self) -> None:
@@ -77,9 +94,10 @@ class Car:
         Raises:
             DomainValidationError: If model is invalid
         """
-        if not self.model or len(self.model) < 1 or len(self.model) > 50:
+        if not self.model or len(self.model) < MODEL_MIN or len(self.model) > MODEL_MAX:
             raise DomainValidationError(
-                "Model must be between 1 and 50 characters", "INVALID_MODEL"
+                f"Model must be between {MODEL_MIN} and {MODEL_MAX} characters",
+                "INVALID_MODEL",
             )
 
     def _validate_year(self) -> None:
@@ -88,9 +106,13 @@ class Car:
         Raises:
             DomainValidationError: If year is invalid
         """
-        if not isinstance(self.year, int) or self.year < 1900 or self.year > 2027:
+        if (
+            not isinstance(self.year, int)
+            or self.year < YEAR_MIN
+            or self.year > YEAR_MAX
+        ):
             raise DomainValidationError(
-                "Year must be between 1900 and 2027", "INVALID_YEAR"
+                f"Year must be between {YEAR_MIN} and {YEAR_MAX}", "INVALID_YEAR"
             )
 
     def _validate_plate_number(self) -> None:
@@ -101,11 +123,11 @@ class Car:
         """
         if (
             not self.plate_number
-            or len(self.plate_number) < 3
-            or len(self.plate_number) > 20
+            or len(self.plate_number) < PLATE_NUMBER_MIN
+            or len(self.plate_number) > PLATE_NUMBER_MAX
         ):
             raise DomainValidationError(
-                "Plate number must be between 3 and 20 characters",
+                f"Plate number must be between {PLATE_NUMBER_MIN} and {PLATE_NUMBER_MAX} characters",
                 "INVALID_PLATE_NUMBER",
             )
 
@@ -115,9 +137,10 @@ class Car:
         Raises:
             DomainValidationError: If color is invalid
         """
-        if not self.color or len(self.color) < 2 or len(self.color) > 30:
+        if not self.color or len(self.color) < COLOR_MIN or len(self.color) > COLOR_MAX:
             raise DomainValidationError(
-                "Color must be between 2 and 30 characters", "INVALID_COLOR"
+                f"Color must be between {COLOR_MIN} and {COLOR_MAX} characters",
+                "INVALID_COLOR",
             )
 
     def _validate_price_per_day(self) -> None:
