@@ -159,23 +159,10 @@ def update_car(request, car_id: int, data: UpdateCarRequest):
     """
     try:
         # Build update dict with only provided fields
-        update_fields = {}
-        if data.name is not None:
-            update_fields["name"] = data.name
-        if data.brand is not None:
-            update_fields["brand"] = data.brand
-        if data.model is not None:
-            update_fields["model"] = data.model
-        if data.year is not None:
-            update_fields["year"] = data.year
-        if data.plate_number is not None:
-            update_fields["plate_number"] = data.plate_number
-        if data.color is not None:
-            update_fields["color"] = data.color
-        if data.price_per_day is not None:
-            update_fields["price_per_day"] = data.price_per_day
-        if data.regional is not None:
-            update_fields["regional_id"] = data.regional
+        update_fields = data.model_dump(exclude_none=True)
+        # Rename 'regional' to 'regional_id' for domain entity
+        if "regional" in update_fields:
+            update_fields["regional_id"] = update_fields.pop("regional")
 
         cars_repo, regionals_repo = _get_repositories()
         use_case = UpdateCarUseCase(cars_repo, regionals_repo)
