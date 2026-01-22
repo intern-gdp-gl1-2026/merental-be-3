@@ -32,9 +32,14 @@ def _get_repositories():
     return DjangoCarRepository(), DjangoRegionalRepository()
 
 
-def _car_to_response(car, regionals):
-    """Convert Car entity to CarResponse DTO."""
-    regional = regionals.find_by_id(car.regional_id)
+def _car_to_response(car, regionals_by_id):
+    """Convert Car entity to CarResponse DTO.
+
+    Args:
+        car: Car entity to convert
+        regionals_by_id: Dictionary of regionals indexed by ID {id: regional}
+    """
+    regional = regionals_by_id.get(car.regional_id)
     if not regional:
         raise ValueError(f"Regional with ID {car.regional_id} not found")
     return CarResponse(
@@ -77,9 +82,12 @@ def create_car(request, data: CreateCarRequest):
             price_per_day=data.price_per_day,
             regional_id=data.regional,
         )
+        # Build regionals lookup dict for response conversion
+        regional = regionals_repo.find_by_id(created_car.regional_id)
+        regionals_by_id = {regional.id: regional}
         return 201, {
             "message": "Car created successfully",
-            "car": _car_to_response(created_car, regionals_repo),
+            "car": _car_to_response(created_car, regionals_by_id),
         }
     except DomainValidationError as e:
         return 400, {"message": e.message}
@@ -113,8 +121,13 @@ def get_cars(request, filters: GetCarsFilterRequest = None):
             start_date=filters.s if filters else None,
             end_date=filters.e if filters else None,
         )
+
+        # Fetch all regionals upfront to avoid N+1 queries
+        all_regionals = regionals_repo.find_all()
+        regionals_by_id = {regional.id: regional for regional in all_regionals}
+
         return 200, {
-            "cars": [_car_to_response(car, regionals_repo) for car in car_list]
+            "cars": [_car_to_response(car, regionals_by_id) for car in car_list]
         }
     except ValueError as e:
         return 400, {"message": str(e)}
@@ -132,7 +145,12 @@ def get_car_by_id(request, car_id: int):
         cars_repo, regionals_repo = _get_repositories()
         use_case = GetCarByIdUseCase(cars_repo)
         retrieved_car = use_case.execute(car_id)
-        return 200, _car_to_response(retrieved_car, regionals_repo)
+
+        # Build regionals lookup dict for response conversion
+        regional = regionals_repo.find_by_id(retrieved_car.regional_id)
+        regionals_by_id = {regional.id: regional}
+
+        return 200, _car_to_response(retrieved_car, regionals_by_id)
     except ValueError as e:
         return 404, {"message": str(e)}
 
@@ -167,9 +185,14 @@ def update_car(request, car_id: int, data: UpdateCarRequest):
         cars_repo, regionals_repo = _get_repositories()
         use_case = UpdateCarUseCase(cars_repo, regionals_repo)
         updated_car = use_case.execute(car_id, **update_fields)
+
+        # Build regionals lookup dict for response conversion
+        regional = regionals_repo.find_by_id(updated_car.regional_id)
+        regionals_by_id = {regional.id: regional}
+
         return 200, {
             "message": "Car updated successfully",
-            "car": _car_to_response(updated_car, regionals_repo),
+            "car": _car_to_response(updated_car, regionals_by_id),
         }
     except DomainValidationError as e:
         return 400, {"message": e.message}
