@@ -102,7 +102,7 @@ class DjangoCarRepository(CarRepository):
             Updated car entity
 
         Raises:
-            ValueError: If car not found
+            ValueError: If car not found or regional_id is invalid
             DatabaseError: For other database errors
         """
         if not car.id:
@@ -110,6 +110,16 @@ class DjangoCarRepository(CarRepository):
 
         try:
             car_model = CarModel.objects.get(id=car.id)
+        except CarModel.DoesNotExist:
+            raise ValueError(f"Car with ID {car.id} not found")
+
+        # Validate regional exists
+        try:
+            regional = RegionalModel.objects.get(id=car.regional_id)
+        except RegionalModel.DoesNotExist:
+            raise ValueError(f"Regional with ID {car.regional_id} not found")
+
+        try:
             car_model.name = car.name
             car_model.brand = car.brand
             car_model.model = car.model
@@ -120,8 +130,6 @@ class DjangoCarRepository(CarRepository):
             car_model.regional_id = car.regional_id
             car_model.save()
             return car
-        except CarModel.DoesNotExist:
-            raise ValueError(f"Car with ID {car.id} not found")
         except DatabaseError as e:
             logger.error(f"Database error in update: {e}")
             raise
