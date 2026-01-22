@@ -1,0 +1,68 @@
+post:
+  summary: Create a new regional
+  description: Creates a new regional in the system
+  operationId: createRegional
+  tags:
+    - Regional
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+              minLength: 2
+              maxLength: 50
+              example: "Jakarta"
+  responses:
+    "201":
+      description: Created
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+              - regional
+            properties:
+              message:
+                type: string
+                example: Regional created successfully
+              regional:
+                $ref: "../openapi.yml#/components/schemas/Regional"
+    "400":
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yml#/components/schemas/BadRequestErrorResponse"
+    "409":
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yml#/components/schemas/ConflictErrorResponse"
+
+get:
+  summary: Get all regionals
+  description: Returns a list of all regionals
+  operationId: getRegionals
+  required: false
+  tags:
+    - Regional
+  responses:
+    "200":
+      description: List of regionals
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              regionals:
+                type: array
+                items:
+                  $ref: "../openapi.yml#/components/schemas/Regional"
