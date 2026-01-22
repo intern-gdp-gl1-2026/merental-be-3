@@ -51,7 +51,7 @@ components:
         - plate_number
         - color
         - price_per_day
-        - location
+        - regional
       properties:
         id:
           type: integer
@@ -78,9 +78,8 @@ components:
           type: number
           format: float
           example: 500000.00
-        location:
-          type: string
-          example: "Jakarta"
+        regional:
+          $ref: '#/components/schemas/Regional'
     ErrorResponse:
       type: object
       required:

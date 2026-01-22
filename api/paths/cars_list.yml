@@ -18,7 +18,7 @@ post:
             - plate_number
             - color
             - price_per_day
-            - location
+            - regional
           properties:
             name:
               type: string
@@ -55,11 +55,10 @@ post:
               format: float
               minimum: 0
               example: 500000.00
-            location:
-              type: string
-              minLength: 2
-              maxLength: 100
-              example: "Jakarta"
+            regional:
+              type: integer
+              description: Regional ID
+              example: 1
   responses:
     "201":
       description: Created
