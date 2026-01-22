@@ -17,6 +17,10 @@ paths:
     $ref: paths/regional.yml
   /regional/{id}:
     $ref: paths/regional_by_id.yml
+  /cars:
+    $ref: paths/cars_list.yml
+  /cars/{id}:
+    $ref: paths/cars_by_id.yml
 components:
   securitySchemes:
     bearerAuth:
@@ -36,6 +40,46 @@ components:
         name:
           type: string
           example: "Jakarta"
+    Car:
+      type: object
+      required:
+        - id
+        - name
+        - brand
+        - model
+        - year
+        - plate_number
+        - color
+        - price_per_day
+        - regional
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Toyota Camry 2023"
+        brand:
+          type: string
+          example: "Toyota"
+        model:
+          type: string
+          example: "Camry"
+        year:
+          type: integer
+          example: 2023
+        plate_number:
+          type: string
+          example: "B 1234 XYZ"
+        color:
+          type: string
+          example: "White"
+        price_per_day:
+          type: number
+          format: float
+          example: 500000.00
+        regional:
+          $ref: '#/components/schemas/Regional'
     ErrorResponse:
       type: object
       required:
@@ -58,7 +102,15 @@ components:
       properties:
         message:
           type: string
-          example: Username already exists
+          example: Resource already exists
+    NotFoundErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          example: Resource not found
     UnauthorizedErrorResponse:
       type: object
       required:
