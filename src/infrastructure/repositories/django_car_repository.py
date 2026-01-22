@@ -53,6 +53,9 @@ class DjangoCarRepository(CarRepository):
 
         Returns:
             Car entity if found, None otherwise
+
+        Raises:
+            DatabaseError: For database errors
         """
         try:
             car_model = CarModel.objects.get(id=id)
@@ -61,20 +64,23 @@ class DjangoCarRepository(CarRepository):
             return None
         except DatabaseError as e:
             logger.error(f"Database error in find_by_id: {e}")
-            return None
+            raise
 
     def find_all(self) -> list[Car]:
         """Find all cars in the database
 
         Returns:
             List of car entities
+
+        Raises:
+            DatabaseError: For database errors
         """
         try:
             car_models = CarModel.objects.all()
             return [self._model_to_entity(car_model) for car_model in car_models]
         except DatabaseError as e:
             logger.error(f"Database error in find_all: {e}")
-            return []
+            raise
 
     def find_by_regional_id(self, regional_id: int) -> list[Car]:
         """Find all cars in a specific regional
@@ -84,13 +90,16 @@ class DjangoCarRepository(CarRepository):
 
         Returns:
             List of car entities in the regional
+
+        Raises:
+            DatabaseError: For database errors
         """
         try:
             car_models = CarModel.objects.filter(regional_id=regional_id)
             return [self._model_to_entity(car_model) for car_model in car_models]
         except DatabaseError as e:
             logger.error(f"Database error in find_by_regional_id: {e}")
-            return []
+            raise
 
     def update(self, car: Car) -> Car:
         """Update a car in the database
@@ -164,6 +173,9 @@ class DjangoCarRepository(CarRepository):
 
         Returns:
             Car entity if found, None otherwise
+
+        Raises:
+            DatabaseError: For database errors
         """
         try:
             car_model = CarModel.objects.get(plate_number=plate_number)
@@ -172,7 +184,7 @@ class DjangoCarRepository(CarRepository):
             return None
         except DatabaseError as e:
             logger.error(f"Database error in find_by_plate_number: {e}")
-            return None
+            raise
 
     @staticmethod
     def _model_to_entity(car_model: CarModel) -> Car:
