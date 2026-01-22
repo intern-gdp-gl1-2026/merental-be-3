@@ -25,13 +25,17 @@ from src.infrastructure.repositories.django_regional_repository import (
 
 router = Router(tags=["Cars"])
 
-# Initialize repositories
-cars = DjangoCarRepository()
-regionals = DjangoRegionalRepository()
+
+def _get_repositories():
+    """Dependency injection for repositories."""
+    return DjangoCarRepository(), DjangoRegionalRepository()
 
 
-def _car_to_response(car):
+def _car_to_response(car, regionals):
     """Convert Car entity to CarResponse DTO."""
+    regional = regionals.find_by_id(car.regional_id)
+    if not regional:
+        raise ValueError(f"Regional with ID {car.regional_id} not found")
     return CarResponse(
         id=car.id,
         name=car.name,
@@ -43,13 +47,13 @@ def _car_to_response(car):
         price_per_day=car.price_per_day,
         regional={
             "id": car.regional_id,
-            "name": regionals.find_by_id(car.regional_id).name,
+            "name": regional.name,
         },
     )
 
 
 @router.post(
-    "", response={201: CreateCarResponse, 400: MessageResponse, 409: MessageResponse}
+    "/", response={201: CreateCarResponse, 400: MessageResponse, 409: MessageResponse}
 )
 def create_car(request, data: CreateCarRequest):
     """Create a new car.
@@ -60,8 +64,9 @@ def create_car(request, data: CreateCarRequest):
         409: Plate number already exists
     """
     try:
-        use_case = CreateCarUseCase(cars, regionals)
-        car = use_case.execute(
+        cars_repo, regionals_repo = _get_repositories()
+        use_case = CreateCarUseCase(cars_repo, regionals_repo)
+        created_car = use_case.execute(
             name=data.name,
             brand=data.brand,
             model=data.model,
@@ -73,7 +78,7 @@ def create_car(request, data: CreateCarRequest):
         )
         return 201, {
             "message": "Car created successfully",
-            "car": _car_to_response(car),
+            "car": _car_to_response(created_car, regionals_repo),
         }
     except DomainValidationError as e:
         return 400, {"message": e.message}
@@ -84,7 +89,7 @@ def create_car(request, data: CreateCarRequest):
         return 400, {"message": error_msg}
 
 
-@router.get("", response={200: GetCarsResponse, 400: MessageResponse})
+@router.get("/", response={200: GetCarsResponse, 400: MessageResponse})
 def get_cars(request, r: int = None, s: int = None, e: int = None):
     """Get all cars with optional filtering.
 
@@ -100,14 +105,17 @@ def get_cars(request, r: int = None, s: int = None, e: int = None):
         400: Invalid filter parameters
     """
     try:
-        use_case = GetCarsUseCase(cars)
-        cars = use_case.execute(regional_id=r, start_date=s, end_date=e)
-        return 200, {"cars": [_car_to_response(car) for car in cars]}
+        cars_repo, regionals_repo = _get_repositories()
+        use_case = GetCarsUseCase(cars_repo)
+        car_list = use_case.execute(regional_id=r, start_date=s, end_date=e)
+        return 200, {
+            "cars": [_car_to_response(car, regionals_repo) for car in car_list]
+        }
     except ValueError as e:
         return 400, {"message": str(e)}
 
 
-@router.get("{car_id}", response={200: CarResponse, 404: MessageResponse})
+@router.get("/{car_id}", response={200: CarResponse, 404: MessageResponse})
 def get_car_by_id(request, car_id: int):
     """Get a car by ID.
 
@@ -116,15 +124,16 @@ def get_car_by_id(request, car_id: int):
         404: Car not found
     """
     try:
-        use_case = GetCarByIdUseCase(cars)
-        car = use_case.execute(car_id)
-        return 200, _car_to_response(car)
+        cars_repo, regionals_repo = _get_repositories()
+        use_case = GetCarByIdUseCase(cars_repo)
+        retrieved_car = use_case.execute(car_id)
+        return 200, _car_to_response(retrieved_car, regionals_repo)
     except ValueError as e:
         return 404, {"message": str(e)}
 
 
 @router.put(
-    "{car_id}",
+    "/{car_id}",
     response={
         200: UpdateCarResponse,
         400: MessageResponse,
@@ -163,11 +172,12 @@ def update_car(request, car_id: int, data: UpdateCarRequest):
         if data.regional is not None:
             update_fields["regional_id"] = data.regional
 
-        use_case = UpdateCarUseCase(cars, regionals)
-        car = use_case.execute(car_id, **update_fields)
+        cars_repo, regionals_repo = _get_repositories()
+        use_case = UpdateCarUseCase(cars_repo, regionals_repo)
+        updated_car = use_case.execute(car_id, **update_fields)
         return 200, {
             "message": "Car updated successfully",
-            "car": _car_to_response(car),
+            "car": _car_to_response(updated_car, regionals_repo),
         }
     except DomainValidationError as e:
         return 400, {"message": e.message}
@@ -180,7 +190,7 @@ def update_car(request, car_id: int, data: UpdateCarRequest):
         return 400, {"message": error_msg}
 
 
-@router.delete("{car_id}", response={200: DeleteCarResponse, 404: MessageResponse})
+@router.delete("/{car_id}", response={200: DeleteCarResponse, 404: MessageResponse})
 def delete_car(request, car_id: int):
     """Delete a car.
 
@@ -189,7 +199,8 @@ def delete_car(request, car_id: int):
         404: Car not found
     """
     try:
-        use_case = DeleteCarUseCase(cars)
+        cars_repo, _ = _get_repositories()
+        use_case = DeleteCarUseCase(cars_repo)
         use_case.execute(car_id)
         return 200, {"message": "Car deleted successfully"}
     except ValueError as e:
