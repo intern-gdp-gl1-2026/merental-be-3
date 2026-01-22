@@ -124,7 +124,7 @@ class DjangoCarRepository(CarRepository):
 
         # Validate regional exists
         try:
-            regional = RegionalModel.objects.get(id=car.regional_id)
+            RegionalModel.objects.get(id=car.regional_id)
         except RegionalModel.DoesNotExist:
             raise ValueError(f"Regional with ID {car.regional_id} not found")
 
