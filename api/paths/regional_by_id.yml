@@ -1,0 +1,118 @@
+get:
+  summary: Get regional by ID
+  description: Returns a single regional by its ID
+  operationId: getRegionalById
+  tags:
+    - Regional
+  parameters:
+    - name: id
+      in: path
+      description: Regional ID
+      required: true
+      schema:
+        type: integer
+      example: 1
+  responses:
+    "200":
+      description: Regional details
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yml#/components/schemas/Regional"
+    "404":
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yml#/components/schemas/ErrorResponse"
+
+put:
+  summary: Update a regional
+  description: Updates an existing regional in the system
+  operationId: updateRegional
+  tags:
+    - Regional
+  parameters:
+    - name: id
+      in: path
+      description: ID of the regional to update
+      required: true
+      schema:
+        type: integer
+      example: 1
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+              minLength: 2
+              maxLength: 50
+              example: "Jakarta"
+  responses:
+    "200":
+      description: Updated
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+              - regional
+            properties:
+              message:
+                type: string
+                example: Regional updated successfully
+              regional:
+                $ref: "../openapi.yml#/components/schemas/Regional"
+    "400":
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yml#/components/schemas/BadRequestErrorResponse"
+    "404":
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yml#/components/schemas/ErrorResponse"
+
+delete:
+  summary: Delete a regional
+  description: Deletes an existing regional in the system
+  operationId: deleteRegional
+  tags:
+    - Regional
+  parameters:
+    - name: id
+      in: path
+      description: ID of the regional to delete
+      required: true
+      schema:
+        type: integer
+      example: 1
+  responses:
+    "200":
+      description: Deleted
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Regional deleted successfully
+    "404":
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yml#/components/schemas/ErrorResponse"
