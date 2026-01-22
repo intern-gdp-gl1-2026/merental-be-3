@@ -32,3 +32,13 @@ class InvalidPasswordError(DomainValidationError):
         ),
     ):
         super().__init__(message, "INVALID_PASSWORD")
+
+
+class InvalidRegionalNameError(DomainValidationError):
+    """Raised when regional name is invalid"""
+
+    def __init__(
+        self,
+        message: str = "Regional name must be between 2 and 50 characters.",
+    ):
+        super().__init__(message, "INVALID_REGIONAL_NAME")
