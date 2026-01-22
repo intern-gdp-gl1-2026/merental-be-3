@@ -168,6 +168,14 @@ class CreateCarResponse(Schema):
     car: CarResponse
 
 
+class GetCarsFilterRequest(Schema):
+    """Query parameters for filtering cars"""
+
+    r: int = None  # Regional ID
+    s: int = None  # Start date (Unix timestamp)
+    e: int = None  # End date (Unix timestamp)
+
+
 class GetCarsResponse(Schema):
     """Response schema for getting all cars"""
 

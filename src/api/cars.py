@@ -7,6 +7,7 @@ from src.api.schemas.car_dto import (
     CreateCarResponse,
     UpdateCarRequest,
     UpdateCarResponse,
+    GetCarsFilterRequest,
     GetCarsResponse,
     CarResponse,
     DeleteCarResponse,
@@ -90,7 +91,7 @@ def create_car(request, data: CreateCarRequest):
 
 
 @router.get("/", response={200: GetCarsResponse, 400: MessageResponse})
-def get_cars(request, r: int = None, s: int = None, e: int = None):
+def get_cars(request, filters: GetCarsFilterRequest = None):
     """Get all cars with optional filtering.
 
     Query parameters:
@@ -107,7 +108,11 @@ def get_cars(request, r: int = None, s: int = None, e: int = None):
     try:
         cars_repo, regionals_repo = _get_repositories()
         use_case = GetCarsUseCase(cars_repo)
-        car_list = use_case.execute(regional_id=r, start_date=s, end_date=e)
+        car_list = use_case.execute(
+            regional_id=filters.r if filters else None,
+            start_date=filters.s if filters else None,
+            end_date=filters.e if filters else None,
+        )
         return 200, {
             "cars": [_car_to_response(car, regionals_repo) for car in car_list]
         }
