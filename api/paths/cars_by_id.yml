@@ -1,0 +1,162 @@
+get:
+  summary: Get car by ID
+  description: Returns a single car by its ID
+  operationId: getCarById
+  tags:
+    - Cars
+  parameters:
+    - name: id
+      in: path
+      description: Car ID
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: Car details
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/Car'
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/NotFoundErrorResponse'
+
+put:
+  summary: Update a car
+  description: |
+    Updates an existing car's information. Supports partial updates - only include the fields you want to change.
+    Unchanged fields will retain their current values.
+    
+    **Example partial update:**
+    ```json
+    {
+      "color": "Black"
+    }
+    ```
+  operationId: updateCar
+  tags:
+    - Cars
+  parameters:
+    - name: id
+      in: path
+      description: Car ID
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    required: false
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 3
+              maxLength: 100
+              example: "Toyota Camry 2023"
+            brand:
+              type: string
+              minLength: 2
+              maxLength: 50
+              example: "Toyota"
+            model:
+              type: string
+              minLength: 1
+              maxLength: 50
+              example: "Camry"
+            year:
+              type: integer
+              minimum: 1900
+              maximum: 2027
+              example: 2023
+            plate_number:
+              type: string
+              minLength: 3
+              maxLength: 20
+              example: "B 1234 XYZ"
+            color:
+              type: string
+              minLength: 2
+              maxLength: 30
+              example: "Black"
+            price_per_day:
+              type: number
+              format: float
+              minimum: 0
+              example: 500000.00
+            regional:
+              type: integer
+              description: Regional ID
+              example: 1
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+              - car
+            properties:
+              message:
+                type: string
+                example: Car updated successfully
+              car:
+                $ref: '../openapi.yml#/components/schemas/Car'
+    "400":
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/BadRequestErrorResponse'
+    "404":
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/NotFoundErrorResponse'
+    "409":
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/ConflictErrorResponse'
+
+delete:
+  summary: Delete a car
+  description: Deletes a car from the system
+  operationId: deleteCar
+  tags:
+    - Cars
+  parameters:
+    - name: id
+      in: path
+      description: Car ID
+      required: true
+      schema:
+        type: integer
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Car deleted successfully
+    "404":
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/NotFoundErrorResponse'
