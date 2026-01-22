@@ -2,7 +2,6 @@
 
 from src.domain.entities.car import Car
 from src.domain.repositories.car_repository import CarRepository
-from src.domain.repositories.regional_repository import RegionalRepository
 
 
 class CreateCarUseCase:
@@ -10,13 +9,15 @@ class CreateCarUseCase:
 
     This use case handles the creation of a new car with validation of:
     - Car data validity (domain validation)
-    - Regional existence (foreign key constraint)
     - Plate number uniqueness
+
+    Note: Regional existence validation is delegated to the repository layer
+    to maintain a single source of truth for data integrity checks.
     """
 
-    def __init__(self, cars: CarRepository, regionals: RegionalRepository):
+    def __init__(self, cars: CarRepository, regionals=None):
         self.cars = cars
-        self.regionals = regionals
+        # regionals parameter kept for backward compatibility but not used
 
     def execute(
         self,
@@ -46,13 +47,8 @@ class CreateCarUseCase:
 
         Raises:
             DomainValidationError: If car data is invalid
-            ValueError: If regional doesn't exist or plate number already exists
+            ValueError: If plate number already exists or regional doesn't exist
         """
-        # Validate regional exists
-        regional = self.regionals.find_by_id(regional_id)
-        if not regional:
-            raise ValueError(f"Regional with ID {regional_id} not found")
-
         # Check plate number uniqueness
         existing_car = self.cars.find_by_plate_number(plate_number)
         if existing_car:
@@ -70,5 +66,5 @@ class CreateCarUseCase:
             regional_id=regional_id,
         )
 
-        # Save to repository
+        # Save to repository (regional validation happens in repository layer)
         return self.cars.save(car)

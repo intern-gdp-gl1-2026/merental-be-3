@@ -2,18 +2,18 @@
 
 from src.domain.entities.car import Car
 from src.domain.repositories.car_repository import CarRepository
-from src.domain.repositories.regional_repository import RegionalRepository
 
 
 class UpdateCarUseCase:
     """Update an existing car.
 
     Supports partial updates - only provided fields are updated.
+    Regional existence validation is delegated to the repository layer.
     """
 
-    def __init__(self, cars: CarRepository, regionals: RegionalRepository):
+    def __init__(self, cars: CarRepository, regionals=None):
         self.cars = cars
-        self.regionals = regionals
+        # regionals parameter kept for backward compatibility but not used
 
     def execute(self, car_id: int, **update_fields) -> Car:
         """Update a car.
@@ -26,20 +26,13 @@ class UpdateCarUseCase:
             The updated car
 
         Raises:
-            ValueError: If car not found
+            ValueError: If car not found, regional doesn't exist, or plate number already exists
             DomainValidationError: If updated data is invalid
         """
         # Get existing car
         car = self.cars.find_by_id(car_id)
         if not car:
             raise ValueError(f"Car with ID {car_id} not found")
-
-        # If regional_id is being updated, validate it exists
-        if "regional_id" in update_fields:
-            regional_id = update_fields["regional_id"]
-            regional = self.regionals.find_by_id(regional_id)
-            if not regional:
-                raise ValueError(f"Regional with ID {regional_id} not found")
 
         # If plate number is being updated, check uniqueness
         if (
@@ -55,5 +48,5 @@ class UpdateCarUseCase:
         # Update car with validation
         car.update(**update_fields)
 
-        # Save to repository
+        # Save to repository (regional validation happens in repository layer)
         return self.cars.update(car)
