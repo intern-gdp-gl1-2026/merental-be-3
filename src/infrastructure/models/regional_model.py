@@ -2,7 +2,7 @@ from django.db import models
 
 
 class RegionalModel(models.Model):
-    name = models.CharField(max_length=32, unique=True, db_index=True)
+    name = models.CharField(max_length=50, unique=True, db_index=True)
 
     class Meta:
         db_table = "regionals"
