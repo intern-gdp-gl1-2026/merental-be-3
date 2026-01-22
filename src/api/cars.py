@@ -84,6 +84,10 @@ def create_car(request, data: CreateCarRequest):
         )
         # Build regionals lookup dict for response conversion
         regional = regionals_repo.find_by_id(created_car.regional_id)
+        if not regional:
+            return 400, {
+                "message": f"Regional with ID {created_car.regional_id} not found"
+            }
         regionals_by_id = {regional.id: regional}
         return 201, {
             "message": "Car created successfully",
@@ -148,6 +152,10 @@ def get_car_by_id(request, car_id: int):
 
         # Build regionals lookup dict for response conversion
         regional = regionals_repo.find_by_id(retrieved_car.regional_id)
+        if not regional:
+            return 404, {
+                "message": f"Regional with ID {retrieved_car.regional_id} not found"
+            }
         regionals_by_id = {regional.id: regional}
 
         return 200, _car_to_response(retrieved_car, regionals_by_id)
@@ -188,6 +196,10 @@ def update_car(request, car_id: int, data: UpdateCarRequest):
 
         # Build regionals lookup dict for response conversion
         regional = regionals_repo.find_by_id(updated_car.regional_id)
+        if not regional:
+            return 400, {
+                "message": f"Regional with ID {updated_car.regional_id} not found"
+            }
         regionals_by_id = {regional.id: regional}
 
         return 200, {
