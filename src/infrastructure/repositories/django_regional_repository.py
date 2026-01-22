@@ -22,7 +22,7 @@ class DjangoRegionalRepository(RegionalRepository):
             Regional: Saved regional entity with ID
 
         Raises:
-            IntegrityError: If username already exists (race condition)
+            IntegrityError: If a regional with the same name already exists (race condition)
             DatabaseError: For other database errors
         """
         regional_model = RegionalModel(name=regional.name)

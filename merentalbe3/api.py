@@ -9,7 +9,7 @@ api = NinjaAPI()
 api.add_router("/auth", auth_router)
 
 # Include regional routes
-api.add_router("/regionals", regional_router)
+api.add_router("/regional", regional_router)
 
 
 @api.get("/ping", response={200: str})

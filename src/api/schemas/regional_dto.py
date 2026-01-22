@@ -2,24 +2,12 @@ from ninja import Schema
 from typing import List
 
 
-class GetRegionalByIdRequest(Schema):
-    id: int
-
-
-class GetAllRegionalsRequest(Schema):
-    pass
-
-
 class CreateRegionalRequest(Schema):
     name: str
 
 
 class UpdateRegionalRequest(Schema):
     name: str
-
-
-class DeleteRegionalRequest(Schema):
-    id: int
 
 
 class RegionalResponse(Schema):
