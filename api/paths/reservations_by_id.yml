@@ -82,11 +82,13 @@ put:
               type: integer
               format: int64
               description: Reservation start date as Unix epoch timestamp (seconds)
+              minimum: 0
               example: 1737792000
             end_date:
               type: integer
               format: int64
-              description: Reservation end date as Unix epoch timestamp (seconds)
+              description: Reservation end date as Unix epoch timestamp (seconds). Must be greater than start_date.
+              minimum: 0
               example: 1738224000
             status:
               type: string
