@@ -1,6 +1,12 @@
 get:
   summary: Get reservation by ID
-  description: Returns a single reservation by its ID
+  description: |
+    Returns a single reservation by its ID.
+    
+    **Authorization & Access Control:**
+    - Requires valid JWT token (Bearer authentication)
+    - Users can only view their own reservations (returns 403 Forbidden if not owner)
+    - Admin users can view any reservation
   operationId: getReservationById
   tags:
     - Reservations
@@ -42,7 +48,11 @@ get:
 put:
   summary: Update a reservation
   description: |
-    Updates an existing reservation. Supports partial updates - only include the fields you want to change.
+    Updates an existing reservation. Supports partial updates for dates and status.
+    
+    **Total Price Recalculation:**
+    - When `start_date` or `end_date` is updated, `total_price` is automatically recalculated
+    - Formula: `total_price = car.price_per_day × (new_end_date - new_start_date) / 86400`
     
     **Date Update Rules:**
     - When updating start_date or end_date, the system validates that the new dates do not conflict 
@@ -56,8 +66,9 @@ put:
     - `confirmed` → `completed`: Admin marks reservation as completed after rental ends
     - Invalid transitions (e.g., `cancelled` → any state, `completed` → any state) will return 400 Bad Request
     
-    **Access Control:**
-    - Users can only update their own reservations
+    **Authorization & Access Control:**
+    - Requires valid JWT token (Bearer authentication)
+    - Users can only update their own reservations (returns 403 Forbidden if not owner)
     - Only admins can transition to `completed` status
   operationId: updateReservation
   tags:
@@ -81,18 +92,29 @@ put:
             start_date:
               type: integer
               format: int64
-              description: Reservation start date as Unix epoch timestamp (seconds)
+              description: |
+                Reservation start date as Unix epoch timestamp (seconds).
+                Must be less than end_date.
               minimum: 0
               example: 1737792000
             end_date:
               type: integer
               format: int64
-              description: Reservation end date as Unix epoch timestamp (seconds). Must be greater than start_date.
+              description: |
+                Reservation end date as Unix epoch timestamp (seconds).
+                Must be greater than start_date.
+                When updating this field, the system checks for conflicts with other confirmed/pending reservations.
               minimum: 0
               example: 1738224000
             status:
               type: string
-              description: Reservation status
+              description: |
+                Reservation status. Only valid transitions are allowed:
+                - pending → confirmed (user confirms)
+                - pending → cancelled (user cancels before confirmation)
+                - confirmed → cancelled (user cancels after confirmation)
+                - confirmed → completed (admin marks as done)
+                Invalid transitions return 400 Bad Request
               enum:
                 - pending
                 - confirmed
@@ -121,6 +143,15 @@ put:
         application/json:
           schema:
             $ref: '../openapi.yml#/components/schemas/BadRequestErrorResponse'
+          examples:
+            invalidStatusTransition:
+              summary: Invalid status transition
+              value:
+                message: "Invalid status transition from completed to pending"
+            invalidDateRange:
+              summary: Invalid date range
+              value:
+                message: "Reservation end_date must be after start_date"
     "401":
       description: Unauthorized
       content:
@@ -145,17 +176,25 @@ put:
         application/json:
           schema:
             $ref: '../openapi.yml#/components/schemas/ConflictErrorResponse'
+          examples:
+            dateConflict:
+              summary: Date conflict with existing reservation
+              value:
+                message: "The new dates overlap with an existing confirmed or pending reservation for this car"
 
 delete:
   summary: Cancel a reservation
   description: |
-    Cancels a reservation by marking it as "cancelled" (soft delete). The reservation record is preserved 
+    Deletes a reservation by marking its status as "cancelled" (soft delete). The reservation record is preserved 
     in the system for audit and history purposes and will not be permanently deleted.
     
     **Behavior:**
-    - Changes reservation status from `pending` or `confirmed` to `cancelled`
+    - Changes reservation status to `cancelled`
     - Cannot cancel a reservation that is already `cancelled` or `completed`
-    - Users can only cancel their own reservations
+    
+    **Authorization & Access Control:**
+    - Requires valid JWT token (Bearer authentication)
+    - Users can only cancel their own reservations (returns 403 Forbidden if not owner)
     - Admins can cancel any reservation
     
     **Note:** This is a soft delete operation - the data remains in the database for historical and 

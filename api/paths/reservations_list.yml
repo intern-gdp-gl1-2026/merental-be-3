@@ -1,6 +1,16 @@
 post:
   summary: Create a new reservation
-  description: Creates a new car reservation for a user
+  description: |
+    Creates a new car reservation for a user.
+    
+    **Total Price Calculation:**
+    - If `total_price` is not provided, it will be automatically calculated based on the car's daily rate
+    - Formula: `total_price = car.price_per_day × (end_date - start_date) / 86400`
+    - The result is the total rental cost for the entire reservation duration
+    
+    **Authentication & Authorization:**
+    - Requires valid JWT token (Bearer authentication)
+    - Reservation will be created for the authenticated user
   operationId: createReservation
   tags:
     - Reservations
@@ -19,19 +29,24 @@ post:
           properties:
             car:
               type: integer
-              description: Car ID
+              description: Car ID that the user wants to reserve
               minimum: 1
               example: 1
             start_date:
               type: integer
               format: int64
-              description: Reservation start date as Unix epoch timestamp (seconds)
+              description: |
+                Reservation start date as Unix epoch timestamp (seconds).
+                Must be less than end_date.
               minimum: 0
               example: 1737792000
             end_date:
               type: integer
               format: int64
-              description: Reservation end date as Unix epoch timestamp (seconds). Must be greater than start_date.
+              description: |
+                Reservation end date as Unix epoch timestamp (seconds).
+                Must be greater than start_date.
+                The system will check for conflicts with other confirmed/pending reservations for this car.
               minimum: 0
               example: 1738224000
   responses:
@@ -78,8 +93,12 @@ post:
 get:
   summary: Get all reservations
   description: |
-    Returns a list of reservations. Regular users see only their reservations, 
-    while admin users can see all reservations.
+    Returns a list of reservations with optional status filtering.
+    
+    **Authorization & Access Control:**
+    - Requires valid JWT token (Bearer authentication)
+    - Regular users will only see their own reservations
+    - Admin users can see all reservations
   operationId: getReservations
   tags:
     - Reservations
