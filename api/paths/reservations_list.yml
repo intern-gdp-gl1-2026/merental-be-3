@@ -86,7 +86,7 @@ get:
   security:
     - bearerAuth: []
   parameters:
-    - name: s
+    - name: status
       in: query
       description: Filter by reservation status (pending, confirmed, cancelled, completed)
       required: false
