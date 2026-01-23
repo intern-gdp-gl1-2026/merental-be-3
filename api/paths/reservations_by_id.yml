@@ -38,3 +38,166 @@ get:
         application/json:
           schema:
             $ref: '../openapi.yml#/components/schemas/NotFoundErrorResponse'
+
+put:
+  summary: Update a reservation
+  description: |
+    Updates an existing reservation. Supports partial updates - only include the fields you want to change.
+    
+    **Date Update Rules:**
+    - When updating start_date or end_date, the system validates that the new dates do not conflict 
+      with other confirmed or pending reservations for the same car
+    - If the new dates overlap with an existing reservation → returns 409 Conflict
+    
+    **Status Transition Rules:**
+    - `pending` → `confirmed`: User confirms the booking
+    - `pending` → `cancelled`: User cancels before confirmation
+    - `confirmed` → `cancelled`: User cancels after confirmation (may incur cancellation fees)
+    - `confirmed` → `completed`: Admin marks reservation as completed after rental ends
+    - Invalid transitions (e.g., `cancelled` → any state, `completed` → any state) will return 400 Bad Request
+    
+    **Access Control:**
+    - Users can only update their own reservations
+    - Only admins can transition to `completed` status
+  operationId: updateReservation
+  tags:
+    - Reservations
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      description: Reservation ID
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    required: false
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            start_date:
+              type: integer
+              format: int64
+              description: Reservation start date as Unix epoch timestamp (seconds)
+              example: 1737792000
+            end_date:
+              type: integer
+              format: int64
+              description: Reservation end date as Unix epoch timestamp (seconds)
+              example: 1738224000
+            status:
+              type: string
+              description: Reservation status
+              enum:
+                - pending
+                - confirmed
+                - cancelled
+                - completed
+              example: confirmed
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+              - reservation
+            properties:
+              message:
+                type: string
+                example: Reservation updated successfully
+              reservation:
+                $ref: '../openapi.yml#/components/schemas/Reservation'
+    "400":
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/BadRequestErrorResponse'
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/UnauthorizedErrorResponse'
+    "403":
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/ForbiddenErrorResponse'
+    "404":
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/NotFoundErrorResponse'
+    "409":
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/ConflictErrorResponse'
+
+delete:
+  summary: Cancel a reservation
+  description: |
+    Cancels a reservation by marking it as "cancelled" (soft delete). The reservation record is preserved 
+    in the system for audit and history purposes and will not be permanently deleted.
+    
+    **Behavior:**
+    - Changes reservation status from `pending` or `confirmed` to `cancelled`
+    - Cannot cancel a reservation that is already `cancelled` or `completed`
+    - Users can only cancel their own reservations
+    - Admins can cancel any reservation
+    
+    **Note:** This is a soft delete operation - the data remains in the database for historical and 
+    audit trail purposes.
+  operationId: deleteReservation
+  tags:
+    - Reservations
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      description: Reservation ID
+      required: true
+      schema:
+        type: integer
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Reservation cancelled successfully
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/UnauthorizedErrorResponse'
+    "403":
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/ForbiddenErrorResponse'
+    "404":
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/NotFoundErrorResponse'
