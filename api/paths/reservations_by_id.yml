@@ -185,6 +185,12 @@ delete:
               message:
                 type: string
                 example: Reservation cancelled successfully
+    "400":
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/BadRequestErrorResponse'
     "401":
       description: Unauthorized
       content:
