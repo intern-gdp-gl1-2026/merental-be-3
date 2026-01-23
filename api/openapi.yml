@@ -13,6 +13,10 @@ paths:
     $ref: paths/auth_register.yml
   /auth/login:
     $ref: paths/auth_login.yml
+  /users:
+    $ref: paths/users.yml
+  /users/{id}:
+    $ref: paths/users_by_id.yml
   /regional:
     $ref: paths/regional.yml
   /regional/{id}:
@@ -44,6 +48,23 @@ components:
         name:
           type: string
           example: "Jakarta"
+    User:
+      type: object
+      required:
+        - id
+        - username
+      properties:
+        id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: "mieintel"
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the user was created
+          example: "2025-01-23T10:30:00Z"
     Car:
       type: object
       required:
@@ -83,7 +104,7 @@ components:
           format: float
           example: 500000.00
         regional:
-          $ref: '#/components/schemas/Regional'
+          $ref: "#/components/schemas/Regional"
     ErrorResponse:
       type: object
       required:
@@ -159,7 +180,7 @@ components:
               type: string
               example: "john_doe"
         car:
-          $ref: '#/components/schemas/Car'
+          $ref: "#/components/schemas/Car"
         start_date:
           type: integer
           format: int64
@@ -188,4 +209,3 @@ components:
           format: date-time
           description: Timestamp when the reservation was created
           example: "2025-01-23T10:30:00Z"
-
