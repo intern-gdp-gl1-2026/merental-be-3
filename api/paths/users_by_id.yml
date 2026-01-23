@@ -57,7 +57,7 @@ put:
         type: integer
       example: 1
   requestBody:
-    required: true
+    required: false
     content:
       application/json:
         schema:
