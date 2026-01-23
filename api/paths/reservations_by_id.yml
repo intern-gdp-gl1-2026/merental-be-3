@@ -1,0 +1,40 @@
+get:
+  summary: Get reservation by ID
+  description: Returns a single reservation by its ID
+  operationId: getReservationById
+  tags:
+    - Reservations
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      description: Reservation ID
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: Reservation details
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/Reservation'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/UnauthorizedErrorResponse'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/ForbiddenErrorResponse'
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/NotFoundErrorResponse'
