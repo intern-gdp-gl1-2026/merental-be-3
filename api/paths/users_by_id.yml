@@ -38,11 +38,13 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../openapi.yml#/components/schemas/ErrorResponse"
+            $ref: "../openapi.yml#/components/schemas/NotFoundErrorResponse"
 
 put:
   summary: Update a user
-  description: Updates an existing user in the system
+  description: >
+    Updates an existing user in the system. Authenticated users can update only their
+    own user profile; administrators can update any user.
   operationId: updateUser
   tags:
     - User
