@@ -119,7 +119,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: "../openapi.yml#/components/schemas/ErrorResponse"
+            $ref: "../openapi.yml#/components/schemas/NotFoundErrorResponse"
     "409":
       description: Conflict
       content:
@@ -129,7 +129,7 @@ put:
 
 delete:
   summary: Delete a user
-  description: Deletes an existing user from the system
+  description: Deletes an existing user from the system. Users can only delete their own account. Admins can delete any user.
   operationId: deleteUser
   tags:
     - User
@@ -173,4 +173,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../openapi.yml#/components/schemas/ErrorResponse"
+            $ref: "../openapi.yml#/components/schemas/NotFoundErrorResponse"
