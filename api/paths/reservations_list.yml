@@ -1,3 +1,77 @@
+post:
+  summary: Create a new reservation
+  description: Creates a new car reservation for a user
+  operationId: createReservation
+  tags:
+    - Reservations
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - car
+            - start_date
+            - end_date
+          properties:
+            car:
+              type: integer
+              description: Car ID
+              example: 1
+            start_date:
+              type: integer
+              format: int64
+              description: Reservation start date as Unix epoch timestamp (seconds)
+              example: 1737792000
+            end_date:
+              type: integer
+              format: int64
+              description: Reservation end date as Unix epoch timestamp (seconds)
+              example: 1738224000
+  responses:
+    "201":
+      description: Created
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+              - reservation
+            properties:
+              message:
+                type: string
+                example: Reservation created successfully
+              reservation:
+                $ref: '../openapi.yml#/components/schemas/Reservation'
+    "400":
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/BadRequestErrorResponse'
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/UnauthorizedErrorResponse'
+    "404":
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/NotFoundErrorResponse'
+    "409":
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/ConflictErrorResponse'
+
 get:
   summary: Get all reservations
   description: |
