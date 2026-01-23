@@ -53,6 +53,7 @@ components:
       required:
         - id
         - username
+        - created_at
       properties:
         id:
           type: integer
