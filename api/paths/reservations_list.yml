@@ -1,0 +1,41 @@
+get:
+  summary: Get all reservations
+  description: |
+    Returns a list of reservations. Regular users see only their reservations, 
+    while admin users can see all reservations.
+  operationId: getReservations
+  tags:
+    - Reservations
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: s
+      in: query
+      description: Filter by reservation status (pending, confirmed, cancelled, completed)
+      required: false
+      schema:
+        type: string
+        enum:
+          - pending
+          - confirmed
+          - cancelled
+          - completed
+      example: confirmed
+  responses:
+    '200':
+      description: List of reservations
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              reservations:
+                type: array
+                items:
+                  $ref: '../openapi.yml#/components/schemas/Reservation'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../openapi.yml#/components/schemas/UnauthorizedErrorResponse'
