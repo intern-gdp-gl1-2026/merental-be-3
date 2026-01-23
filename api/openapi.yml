@@ -21,6 +21,10 @@ paths:
     $ref: paths/cars_list.yml
   /cars/{id}:
     $ref: paths/cars_by_id.yml
+  /reservations:
+    $ref: paths/reservations_list.yml
+  /reservations/{id}:
+    $ref: paths/reservations_by_id.yml
 components:
   securitySchemes:
     bearerAuth:
@@ -119,3 +123,69 @@ components:
         message:
           type: string
           example: Invalid credentials
+    ForbiddenErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          example: Access denied
+    Reservation:
+      type: object
+      required:
+        - id
+        - user
+        - car
+        - start_date
+        - end_date
+        - status
+        - total_price
+        - created_at
+      properties:
+        id:
+          type: integer
+          example: 1
+        user:
+          type: object
+          required:
+            - id
+            - username
+          properties:
+            id:
+              type: integer
+              example: 1
+            username:
+              type: string
+              example: "john_doe"
+        car:
+          $ref: '#/components/schemas/Car'
+        start_date:
+          type: integer
+          format: int64
+          description: Reservation start date as Unix epoch timestamp (seconds)
+          example: 1737792000
+        end_date:
+          type: integer
+          format: int64
+          description: Reservation end date as Unix epoch timestamp (seconds)
+          example: 1738224000
+        status:
+          type: string
+          enum:
+            - pending
+            - confirmed
+            - cancelled
+            - completed
+          example: confirmed
+        total_price:
+          type: number
+          format: float
+          description: Total price for the reservation
+          example: 1500000.00
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the reservation was created
+          example: "2025-01-23T10:30:00Z"
+
