@@ -52,7 +52,7 @@ put:
     
     **Total Price Recalculation:**
     - When `start_date` or `end_date` is updated, `total_price` is automatically recalculated
-    - Formula: `total_price = car.price_per_day × (new_end_date - new_start_date) / 86400`
+    - Formula: `total_price = car.price_per_day × ((new_end_date - new_start_date) / 86400)`
     
     **Date Update Rules:**
     - When updating start_date or end_date, the system validates that the new dates do not conflict 

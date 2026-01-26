@@ -5,7 +5,7 @@ post:
     
     **Total Price Calculation:**
     - If `total_price` is not provided, it will be automatically calculated based on the car's daily rate
-    - Formula: `total_price = car.price_per_day × (end_date - start_date) / 86400`
+    - Formula: `total_price = car.price_per_day × ((end_date - start_date) / 86400)`
     - The result is the total rental cost for the entire reservation duration
     
     **Authentication & Authorization:**
