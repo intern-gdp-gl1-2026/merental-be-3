@@ -169,17 +169,7 @@ components:
           type: integer
           example: 1
         user:
-          type: object
-          required:
-            - id
-            - username
-          properties:
-            id:
-              type: integer
-              example: 1
-            username:
-              type: string
-              example: "john_doe"
+          $ref: "#/components/schemas/User"
         car:
           $ref: "#/components/schemas/Car"
         start_date:
