@@ -1,0 +1,2 @@
+add minor README update for yeet skill test
+Detailed changes:\n- Minor README.md addition text added for yeet skill test.\n- Committed multiple skill files under .github/skills (these were present in repo and staged by add -A).\n\nValidation:\n- Confirmed current branch and git status.\n- Ran commit locally and pushed the branch to origin.\n- Verified gh is installed and authenticated.\n\nNotes:\n- This is a small documentation tweak; no runtime code changes expected to affect production.\n
