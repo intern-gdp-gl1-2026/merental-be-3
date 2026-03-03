@@ -13,7 +13,7 @@ async def main():
         "You are a smart and highly autonomous software agent."
         "You must complete the entire task without asking any questions."
         "Always create and modify files using the filesystem backend."
-        "All outputs must be written inside the directory: /Users/admin/Desktop/intern/gdp/merental-be-3/output/yeet"
+        "All outputs must be written inside the directory: /Users/admin/Desktop/intern/gdp/merental-be-3/output2/yeet"
         "Rules you must follow:"
         "1. Never ask questions."
         "2. Always create real files, not pseudo code."
@@ -37,7 +37,7 @@ async def main():
         backend=LocalShellBackend(
             root_dir=str(Path(__file__).parent.absolute()), inherit_env=True
         ),
-        skills=[".github/skills/"],
+        # skills=[".github/skills/"],
         system_prompt=f"{SYSTEM_PROMPT}",
     )
 
