@@ -1,0 +1,37 @@
+Authentication: gh auth status shows a logged-in user (arishashaista).
+
+Repository: intern-gdp-gl1-2026/merental-be-3
+Branch: c/api-contract-reservations-v2
+Open PR: #38 - chores: api contract for reservations v2 (https://github.com/intern-gdp-gl1-2026/merental-be-3/pull/38)
+
+Collected review threads, pull comments, and reviews (numbered):
+
+1) Pull comment (id: 2720306240) — api/paths/reservations_list.yml
+   Link: https://github.com/intern-gdp-gl1-2026/merental-be-3/pull/38#discussion_r2720306240
+   Summary (one short sentence): Clarify the total_price formula by adding parentheses so the date difference is converted to days before multiplying by price_per_day.
+
+2) Pull comment (id: 2720306264) — api/paths/reservations_by_id.yml
+   Link: https://github.com/intern-gdp-gl1-2026/merental-be-3/pull/38#discussion_r2720306264
+   Summary (one short sentence): Clarify the total_price recalculation formula by adding parentheses so the date difference is divided by 86400 before multiplying by price_per_day.
+
+3) Pull comment reply (id: 2721117427) — api/paths/reservations_by_id.yml (reply to comment 2720306264)
+   Link: https://github.com/intern-gdp-gl1-2026/merental-be-3/pull/38#discussion_r2721117427
+   Summary (one short sentence): Reviewer asks to fix the formula mentioned above (apply the parentheses clarification).
+
+4) Review (id: 3696462212) — copilot-pull-request-reviewer (COMMENTED)
+   Link: https://github.com/intern-gdp-gl1-2026/merental-be-3/pull/38#pullrequestreview-3696462212
+   Summary (one short sentence): Informational review summarizing PR changes; no direct code change requested.
+
+5) Review (id: 3697383866) — mie-intel (COMMENTED)
+   Link: https://github.com/intern-gdp-gl1-2026/merental-be-3/pull/38#pullrequestreview-3697383866
+   Summary (one short sentence): Empty comment — no explicit change requested.
+
+6) Review (id: 3697392715) — mie-intel (CHANGES_REQUESTED)
+   Link: https://github.com/intern-gdp-gl1-2026/merental-be-3/pull/38#pullrequestreview-3697392715
+   Summary (one short sentence): Request to fix the formula expressions (make the formulas explicit with parentheses).
+
+Notes:
+- Issue comments for PR #38 are empty.
+- The review_threads API returned 404; individual pull comments and reviews were retrieved and used instead.
+
+Next step: tell me which numbered items you want me to fix (reply with numbers, e.g. "1,2" or "all").

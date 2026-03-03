@@ -1,0 +1,307 @@
+[
+  {
+    "annotations": [],
+    "assignedTo": null,
+    "count": "6",
+    "culprit": "/sentry-test",
+    "firstSeen": "2026-03-02T02:54:04Z",
+    "hasSeen": true,
+    "id": "100021855",
+    "isBookmarked": false,
+    "isPublic": false,
+    "isSubscribed": false,
+    "isUnhandled": false,
+    "issueCategory": "error",
+    "issueType": "error",
+    "lastSeen": "2026-03-02T02:55:04Z",
+    "level": "error",
+    "logger": "django",
+    "metadata": {
+      "filename": "merentalbe3/api.py",
+      "function": "sentry_test",
+      "in_app_frame_mix": "mixed",
+      "initial_priority": 75,
+      "sdk": {
+        "name": "sentry.python.django",
+        "name_normalized": "sentry.python"
+      },
+      "title": null,
+      "type": "RuntimeError",
+      "value": "Deliberate Sentry test error for Sentry integration testing"
+    },
+    "numComments": 0,
+    "permalink": "https://arisha-kd.sentry.io/issues/100021855/",
+    "platform": "python",
+    "priority": "high",
+    "priorityLockedAt": null,
+    "project": {
+      "id": "4510972557525072",
+      "name": "python-django",
+      "platform": "python-django",
+      "slug": "python-django"
+    },
+    "seerAutofixLastTriggered": null,
+    "seerFixabilityScore": 0.3672470152378082,
+    "shareId": null,
+    "shortId": "PYTHON-DJANGO-2",
+    "stats": {
+      "24h": [
+        [
+          1772337600,
+          0
+        ],
+        [
+          1772341200,
+          0
+        ],
+        [
+          1772344800,
+          0
+        ],
+        [
+          1772348400,
+          0
+        ],
+        [
+          1772352000,
+          0
+        ],
+        [
+          1772355600,
+          0
+        ],
+        [
+          1772359200,
+          0
+        ],
+        [
+          1772362800,
+          0
+        ],
+        [
+          1772366400,
+          0
+        ],
+        [
+          1772370000,
+          0
+        ],
+        [
+          1772373600,
+          0
+        ],
+        [
+          1772377200,
+          0
+        ],
+        [
+          1772380800,
+          0
+        ],
+        [
+          1772384400,
+          0
+        ],
+        [
+          1772388000,
+          0
+        ],
+        [
+          1772391600,
+          0
+        ],
+        [
+          1772395200,
+          0
+        ],
+        [
+          1772398800,
+          0
+        ],
+        [
+          1772402400,
+          0
+        ],
+        [
+          1772406000,
+          0
+        ],
+        [
+          1772409600,
+          0
+        ],
+        [
+          1772413200,
+          0
+        ],
+        [
+          1772416800,
+          6
+        ],
+        [
+          1772420400,
+          0
+        ]
+      ]
+    },
+    "status": "unresolved",
+    "statusDetails": {},
+    "subscriptionDetails": null,
+    "substatus": "new",
+    "title": "RuntimeError: Deliberate Sentry test error for Sentry integration testing",
+    "type": "error",
+    "userCount": 1
+  },
+  {
+    "annotations": [],
+    "assignedTo": null,
+    "count": "1",
+    "culprit": "merentalbe3.api in <module>",
+    "firstSeen": "2026-03-02T02:49:06Z",
+    "hasSeen": true,
+    "id": "100021545",
+    "isBookmarked": false,
+    "isPublic": false,
+    "isSubscribed": false,
+    "isUnhandled": true,
+    "issueCategory": "error",
+    "issueType": "error",
+    "lastSeen": "2026-03-02T02:49:06Z",
+    "level": "error",
+    "logger": null,
+    "metadata": {
+      "filename": "merentalbe3/api.py",
+      "function": "<module>",
+      "in_app_frame_mix": "mixed",
+      "initial_priority": 75,
+      "sdk": {
+        "name": "sentry.python.django",
+        "name_normalized": "sentry.python"
+      },
+      "type": "ModuleNotFoundError",
+      "value": "No module named 'ninja'"
+    },
+    "numComments": 0,
+    "permalink": "https://arisha-kd.sentry.io/issues/100021545/",
+    "platform": "python",
+    "priority": "high",
+    "priorityLockedAt": null,
+    "project": {
+      "id": "4510972557525072",
+      "name": "python-django",
+      "platform": "python-django",
+      "slug": "python-django"
+    },
+    "seerAutofixLastTriggered": null,
+    "seerFixabilityScore": 0.5921473503112793,
+    "shareId": null,
+    "shortId": "PYTHON-DJANGO-1",
+    "stats": {
+      "24h": [
+        [
+          1772337600,
+          0
+        ],
+        [
+          1772341200,
+          0
+        ],
+        [
+          1772344800,
+          0
+        ],
+        [
+          1772348400,
+          0
+        ],
+        [
+          1772352000,
+          0
+        ],
+        [
+          1772355600,
+          0
+        ],
+        [
+          1772359200,
+          0
+        ],
+        [
+          1772362800,
+          0
+        ],
+        [
+          1772366400,
+          0
+        ],
+        [
+          1772370000,
+          0
+        ],
+        [
+          1772373600,
+          0
+        ],
+        [
+          1772377200,
+          0
+        ],
+        [
+          1772380800,
+          0
+        ],
+        [
+          1772384400,
+          0
+        ],
+        [
+          1772388000,
+          0
+        ],
+        [
+          1772391600,
+          0
+        ],
+        [
+          1772395200,
+          0
+        ],
+        [
+          1772398800,
+          0
+        ],
+        [
+          1772402400,
+          0
+        ],
+        [
+          1772406000,
+          0
+        ],
+        [
+          1772409600,
+          0
+        ],
+        [
+          1772413200,
+          0
+        ],
+        [
+          1772416800,
+          1
+        ],
+        [
+          1772420400,
+          0
+        ]
+      ]
+    },
+    "status": "unresolved",
+    "statusDetails": {},
+    "subscriptionDetails": null,
+    "substatus": "new",
+    "title": "ModuleNotFoundError: No module named 'ninja'",
+    "type": "error",
+    "userCount": 0
+  }
+]

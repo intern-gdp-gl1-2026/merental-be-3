@@ -1,0 +1,25 @@
+{
+  "id": "1000005",
+  "title": "Demo unresolved error #6",
+  "culprit": "demo.module.function",
+  "metadata": {
+    "type": "Exception",
+    "value": "DemoException: Something demoed"
+  },
+  "count": 25,
+  "firstSeen": "2026-03-02T03:28:56.925837Z",
+  "lastSeen": "2026-03-02T03:28:56.925837Z",
+  "permalink": "https://arisha-kd.sentry.io/organizations/demo/issues/1000005/?project=4510972557525072",
+  "tags": [
+    {
+      "key": "environment",
+      "value": "production"
+    },
+    {
+      "key": "level",
+      "value": "error"
+    }
+  ],
+  "userCount": 1,
+  "comments": []
+}

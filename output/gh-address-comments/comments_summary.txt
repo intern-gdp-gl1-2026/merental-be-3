@@ -1,0 +1,28 @@
+PR: #38 - chores: api contract for reservations v2
+Branch: c/api-contract-reservations-v2
+URL: https://github.com/intern-gdp-gl1-2026/merental-be-3/pull/38
+
+Collected artifacts:
+- gh-auth-status: gh-auth-status.txt
+- current branch: current-branch.txt
+- pr info: pr.json
+- reviews raw: reviews.json
+- issue comments raw: issue_comments.json
+
+Numbered review threads / issue comments and one-line required changes:
+
+1) Review by copilot-pull-request-reviewer[bot] (COMMENTED):
+   Summary: No code change required — informational overview of PR changes and files reviewed.
+
+2) Review by mie-intel (COMMENTED, empty body):
+   Summary: No actionable change identified (review comment is empty).
+
+3) Review by mie-intel (CHANGES_REQUESTED):
+   Comment: "perbaiki yang rumusnya aja biar oke"
+   Summary: Fix the calculation formulas in the reservations API documentation so they are correct.
+
+Notes:
+- No issue comments were found (issue_comments.json is an empty list).
+- Raw review data saved in reviews.json for reference.
+
+Next step: Which numbered items should I fix? Reply with the numbers (for example: "3" or "1,3").
