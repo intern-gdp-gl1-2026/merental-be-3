@@ -1,0 +1,29 @@
+## Pull request overview
+
+This PR enhances the Reservation API contract documentation by adding comprehensive business rules, validation constraints, authorization requirements, and error scenarios. It also refactors the user object in reservation responses to use the shared User schema reference instead of an inline definition.
+
+**Changes:**
+- Enhanced POST and GET /reservations endpoints with detailed total price calculation formulas and authorization documentation
+- Added comprehensive status transition rules, date conflict detection, and error examples for GET, PUT, and DELETE /reservations/{id} endpoints
+- Replaced inline user object definition with $ref to the shared User schema for consistency
+
+### Reviewed changes
+
+Copilot reviewed 3 out of 3 changed files in this pull request and generated 2 comments.
+
+| File | Description |
+| ---- | ----------- |
+| api/paths/reservations_list.yml | Added total price calculation documentation and authorization requirements for POST and GET endpoints |
+| api/paths/reservations_by_id.yml | Enhanced all reservation operations with detailed business rules, status transitions, date validation, and error examples |
+| api/openapi.yml | Refactored user property in Reservation schema to reference the shared User schema for DRY compliance |
+
+
+
+
+
+---
+
+💡 <a href="/intern-gdp-gl1-2026/merental-be-3/new/main/.github/instructions?filename=*.instructions.md" class="Link--inTextBlock" target="_blank" rel="noopener noreferrer">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href="https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot" class="Link--inTextBlock" target="_blank" rel="noopener noreferrer">Learn how to get started</a>.
+
+perbaiki yang rumusnya aja biar oke
+

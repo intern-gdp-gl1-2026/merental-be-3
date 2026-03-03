@@ -1,0 +1,1 @@
+{"error":"detail endpoint not available for issues via /api/0/issues/<id>/ on this Sentry instance; use project-scoped endpoints. fallback: fetched summary via projects/<org>/<project>/issues/?shortId"}

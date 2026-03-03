@@ -1,0 +1,269 @@
+[
+  {
+    "id": 1,
+    "size": 16,
+    "files": [
+      "merentalbe3/api.py",
+      "src/api/dependencies.py",
+      "src/api/regionals.py",
+      "src/api/schemas/regional_dto.py",
+      "src/application/schemas/result_enums.py",
+      "src/application/use_cases/regional/__init__.py",
+      "src/application/use_cases/regional/create_regional.py",
+      "src/application/use_cases/regional/delete_regional.py",
+      "src/application/use_cases/regional/get_regional.py",
+      "src/application/use_cases/regional/get_regionals.py",
+      "src/application/use_cases/regional/update_regional.py",
+      "src/domain/entities/regional.py",
+      "src/domain/exceptions.py",
+      "src/domain/repositories/regional_repository.py",
+      "src/infrastructure/models/regional_model.py",
+      "src/infrastructure/repositories/django_regional_repository.py"
+    ],
+    "maintainers": [
+      {
+        "person_id": "paryapradhanika@gmail.com",
+        "name": "mie-intel",
+        "touches": 46,
+        "touch_share": 0.902,
+        "recency_share": 0.9038,
+        "sensitive_share": 0.0,
+        "primary_tz_offset": "+07:00"
+      },
+      {
+        "person_id": "arishashaistaa@gmail.com",
+        "name": "arishashaista",
+        "touches": 5,
+        "touch_share": 0.098,
+        "recency_share": 0.0962,
+        "sensitive_share": 0.0,
+        "primary_tz_offset": "+07:00"
+      }
+    ],
+    "bus_factor": 2,
+    "owner_count": 2,
+    "totals": {
+      "touches": 51,
+      "recency_weight": 43.816419,
+      "sensitive_weight": 0
+    }
+  },
+  {
+    "id": 2,
+    "size": 11,
+    "files": [
+      "presentation/rest/serializer/user_create.py",
+      "presentation/rest/views/user_view.py",
+      "shared/constants/status_codes.py",
+      "shared/utils/date_utils.py",
+      "src/application/dtos/user_dto.py",
+      "src/application/handler/user_created_handler.py",
+      "src/domain/aggregates/Reservation.py",
+      "src/domain/events/user_created.py",
+      "src/domain/services/Autentification.py",
+      "src/infrastructure/persistant/models/user_model.py",
+      "src/infrastructure/persistant/repositories/django_user_repository.py"
+    ],
+    "maintainers": [
+      {
+        "person_id": "paryapradhanika@gmail.com",
+        "name": "mie-intel",
+        "touches": 22,
+        "touch_share": 1.0,
+        "recency_share": 1.0,
+        "sensitive_share": 0.0,
+        "primary_tz_offset": "+07:00"
+      }
+    ],
+    "bus_factor": 1,
+    "owner_count": 1,
+    "totals": {
+      "touches": 22,
+      "recency_weight": 18.442586,
+      "sensitive_weight": 0
+    }
+  },
+  {
+    "id": 3,
+    "size": 7,
+    "files": [
+      "src/api/users.py",
+      "src/application/schemas/user_dto.py",
+      "src/application/use_cases/user/register_user.py",
+      "src/domain/entities/user.py",
+      "src/domain/repositories/user_repository.py",
+      "src/infrastructure/models/user_model.py",
+      "src/infrastructure/repositories/django_user_repository.py"
+    ],
+    "maintainers": [
+      {
+        "person_id": "paryapradhanika@gmail.com",
+        "name": "mie-intel",
+        "touches": 24,
+        "touch_share": 1.0,
+        "recency_share": 1.0,
+        "sensitive_share": 0.0,
+        "primary_tz_offset": "+07:00"
+      }
+    ],
+    "bus_factor": 1,
+    "owner_count": 1,
+    "totals": {
+      "touches": 24,
+      "recency_weight": 20.253047,
+      "sensitive_weight": 0
+    }
+  },
+  {
+    "id": 4,
+    "size": 5,
+    "files": [
+      "api/openapi.yml",
+      "api/paths/cars_by_id.yml",
+      "api/paths/cars_list.yml",
+      "api/paths/regional.yml",
+      "api/paths/regional_by_id.yml"
+    ],
+    "maintainers": [
+      {
+        "person_id": "arishashaistaa@gmail.com",
+        "name": "arishashaista",
+        "touches": 33,
+        "touch_share": 0.75,
+        "recency_share": 0.7498,
+        "sensitive_share": 0.0,
+        "primary_tz_offset": "+07:00"
+      },
+      {
+        "person_id": "paryapradhanika@gmail.com",
+        "name": "mie-intel",
+        "touches": 11,
+        "touch_share": 0.25,
+        "recency_share": 0.2502,
+        "sensitive_share": 0.0,
+        "primary_tz_offset": "+07:00"
+      }
+    ],
+    "bus_factor": 2,
+    "owner_count": 2,
+    "totals": {
+      "touches": 44,
+      "recency_weight": 37.785235,
+      "sensitive_weight": 0
+    }
+  },
+  {
+    "id": 5,
+    "size": 3,
+    "files": [
+      "merentalbe3/asgi.py",
+      "merentalbe3/urls.py",
+      "merentalbe3/wsgi.py"
+    ],
+    "maintainers": [
+      {
+        "person_id": "paryapradhanika@gmail.com",
+        "name": "mie-intel",
+        "touches": 6,
+        "touch_share": 0.75,
+        "recency_share": 0.7497,
+        "sensitive_share": 0.0,
+        "primary_tz_offset": "+07:00"
+      },
+      {
+        "person_id": "arishashaistaa@gmail.com",
+        "name": "arishashaista",
+        "touches": 2,
+        "touch_share": 0.25,
+        "recency_share": 0.2503,
+        "sensitive_share": 0.0,
+        "primary_tz_offset": "+07:00"
+      }
+    ],
+    "bus_factor": 2,
+    "owner_count": 2,
+    "totals": {
+      "touches": 8,
+      "recency_weight": 6.69572,
+      "sensitive_weight": 0
+    }
+  },
+  {
+    "id": 6,
+    "size": 2,
+    "files": [
+      "api/paths/reservations_by_id.yml",
+      "api/paths/reservations_list.yml"
+    ],
+    "maintainers": [
+      {
+        "person_id": "arishashaistaa@gmail.com",
+        "name": "arishashaista",
+        "touches": 12,
+        "touch_share": 1.0,
+        "recency_share": 1.0,
+        "sensitive_share": 0.0,
+        "primary_tz_offset": "+07:00"
+      }
+    ],
+    "bus_factor": 1,
+    "owner_count": 1,
+    "totals": {
+      "touches": 12,
+      "recency_weight": 10.392716,
+      "sensitive_weight": 0
+    }
+  },
+  {
+    "id": 7,
+    "size": 2,
+    "files": [
+      "src/application/use_cases/car/create_car.py",
+      "src/application/use_cases/car/update_car.py"
+    ],
+    "maintainers": [
+      {
+        "person_id": "arishashaistaa@gmail.com",
+        "name": "arishashaista",
+        "touches": 4,
+        "touch_share": 1.0,
+        "recency_share": 1.0,
+        "sensitive_share": 0.0,
+        "primary_tz_offset": "+07:00"
+      }
+    ],
+    "bus_factor": 1,
+    "owner_count": 1,
+    "totals": {
+      "touches": 4,
+      "recency_weight": 3.445567,
+      "sensitive_weight": 0
+    }
+  },
+  {
+    "id": 8,
+    "size": 2,
+    "files": [
+      "pull_request_template.md",
+      "src/api/cars.py"
+    ],
+    "maintainers": [
+      {
+        "person_id": "arishashaistaa@gmail.com",
+        "name": "arishashaista",
+        "touches": 10,
+        "touch_share": 1.0,
+        "recency_share": 1.0,
+        "sensitive_share": 0.0,
+        "primary_tz_offset": "+07:00"
+      }
+    ],
+    "bus_factor": 1,
+    "owner_count": 1,
+    "totals": {
+      "touches": 10,
+      "recency_weight": 8.862423,
+      "sensitive_weight": 0
+    }
+  }
+]
